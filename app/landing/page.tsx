@@ -1,36 +1,38 @@
-'use client'
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Ensure correct import from 'next/navigation'
 import './landingStyle.scss';
-import { rules } from '@/additional/texts';
-import {motion} from 'framer-motion'
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Page = () => {
-    const [showRules, setShowRules] = useState<boolean>(false)
-    const router = useRouter()
-
-    const submit = () => {
-        router.push('/signUp')
-    }
 
   return (
-    <div className='backgroundImageDiv flex flex-col justify-center items-center gap-12'>
-        {showRules && <motion.div initial={{opacity : 0}} animate={{opacity : 1}} transition={{duration : '.6'}} className='absolute text-center w-1/3 h-5/6 flex text-black items-center justify-center rounded-lg px-2 bg-white bg-opacity-75 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-10' style={{textShadow : "0px 0px 0px"}}>
-        <h1 className='absolute top-4 right-3 cursor-pointer text-black' onClick={() => setShowRules(prev => !prev)}>X</h1>
-        {rules}
-        </motion.div>
-        }
-      <h1 className='flex md:text-5xl text-3xl gap-3 lg:text-8xl'>
-        Join the City of <span className='text-red-800'>Mafia</span>
+    <div
+      className="backgroundImageDiv flex flex-col justify-center items-center gap-12"
+      style={{
+        backgroundImage: `url('https://assetsio.gnwcdn.com/wise-guys-board-game-gale-force-nine-setup.png?width=1920&height=1920&fit=bounds&quality=80&format=jpg&auto=webp')`,
+        width: '100%',
+        height: '100vh',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <h1 className="flex md:text-5xl text-3xl gap-3 lg:text-8xl font-kanit font-extrabold italic text-shadow-custom">
+        Join the City of <span className="text-red-800">Mafia</span>
       </h1>
-      <div className='flex gap-7 flex-col md:flex-row'>
-        <button onClick={() => submit()} className='w-40 bg-red-800  hover:scale-90 hover:bg-opacity-85 transition-all duration-500 shadow-black shadow-md font-bold h-12 rounded-md text-white'>
+      <div className="flex gap-7 flex-col md:flex-row items-center justify-center text-center">
+        <Link
+          href={'/signUp'}
+          className="w-40 bg-red-800 shadow-black flex justify-center items-center shadow-md font-bold h-12 rounded-md text-white"
+        >
           Sign Up
-        </button>
-        <button className='w-40 bg-white hover:scale-90 hover:bg-opacity-85 transition-all duration-500 shadow-black shadow-md font-bold h-12 rounded-md text-red-600' onClick={() => setShowRules(prev => !prev)} style={{ textShadow: '0px 0px 0px' }}>
+        </Link>
+        <button
+          className="w-40 bg-white shadow-black shadow-md font-bold h-12 rounded-md text-red-600 text-shadow-none"
+        >
           Read rules
         </button>
       </div>
+    
     </div>
   );
 };

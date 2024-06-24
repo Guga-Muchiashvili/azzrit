@@ -1,9 +1,18 @@
-import React from 'react'
+'use client';
 
-const page = () => {
+import React from 'react';
+import {useRouter } from 'next/navigation';
+import FormComponent from '@/components/formComponent';
+import schema from './schema';
+import './signUpStyle.scss';
+
+const SignUpPage = () => {
+
   return (
-    <div>page</div>
-  )
+    <div className="w-full h-screen flex flex-col justify-center items-center">
+      <FormComponent schema={schema} signUp={true} />
+    </div>
+  );
 }
 
-export default page
+export default SignUpPage;
