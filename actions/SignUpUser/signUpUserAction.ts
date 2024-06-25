@@ -1,27 +1,43 @@
-'use server'
+"use server";
 import ISignUp from "@/app/signUp/SignUptype";
-import bcrypt from 'bcrypt'
-import schema from '../../app/signUp/schema'
+import bcrypt from "bcrypt";
+import { toast } from "sonner";
 import { db } from "@/lib/db";
+import { getUserByEmail } from "../fetchData/dataRequests";
 
-export const SignUpUser = async(data : ISignUp ) => {
-    const hashedPassword = await bcrypt.hash(data.password, 10)
-    const existingUser = await db.user.findUnique({
-        where : {
-            email: data.email
-        }
-    })
-
-    if(existingUser) {
-       return console.log('already is user')
+export const SignUpUser = async (
+  data: ISignUp
+): Promise<
+  | {
+      error: string;
+      success?: undefined;
+      message?: undefined;
     }
+  | {
+      success: boolean;
+      message: string;
+      error?: undefined;
+    }
+> => {
+  const hashedPassword = await bcrypt.hash(data.password, 10);
+  const existingUser = await getUserByEmail(data.email);
 
-    await db.user.create({
-        data : {
-            username : data.username,
-            email : data.email,
-            password : hashedPassword,
-        }
-    })
+  if (existingUser) {
+    return {
+      error: "User is Already registered",
+    };
+  }
 
-}
+  await db.user.create({
+    data: {
+      username: data.username,
+      email: data.email,
+      password: hashedPassword,
+    },
+  });
+
+  return {
+    success: true,
+    message: "Account Creates",
+  };
+};

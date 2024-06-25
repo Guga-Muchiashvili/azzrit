@@ -2,6 +2,7 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {Toaster, toast} from 'sonner'
 import TextInputElement from "@/elements/textInput/textInput.Element";
 import ButtonInputElement from "@/elements/button/buttonInput.Element";
 import Link from "next/link";
@@ -19,10 +20,19 @@ const FormComponent = ({ signUp, schema } : {signUp : boolean, schema : any}) =>
   });
 
   
-  const onSubmit = (data : any) => {
-    SignUpUser(data)
-    reset(); 
-  };
+const onSubmit = async (data: any) => {
+        try {
+            const response = await SignUpUser(data);
+            if (response.error) {
+                toast.error(response.error);
+            } else {
+                toast.success(response.message);
+                reset();
+            }
+        } catch (error) {
+            toast.error("An unexpected error occurred.");
+        }
+    };
 
   useEffect(() => {
 seturl(window.location.href.split('/').filter(Boolean).pop())
@@ -113,6 +123,7 @@ seturl(window.location.href.split('/').filter(Boolean).pop())
           )}
         </div>
       </div>
+      <Toaster richColors />
     </form>
   );
 };
