@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ISignIn } from "@/app/signIn/SignIntype";
 import ISignUp from "@/app/signUp/SignUptype";
 import { useParams } from "next/navigation";
+import { SignUpUser } from "@/actions/SignUpUser/signUpUserAction";
 
 
 const FormComponent = ({ signUp, schema } : {signUp : boolean, schema : any}) => {
@@ -18,10 +19,8 @@ const FormComponent = ({ signUp, schema } : {signUp : boolean, schema : any}) =>
   });
 
   
-  console.log(errors)
   const onSubmit = (data : any) => {
-    console.log('gsadwa')
-    console.log(data); 
+    SignUpUser(data)
     reset(); 
   };
 
