@@ -11,12 +11,13 @@ export default auth((req) => {
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
     const isAuthRoute = AuthRoutes.includes(nextUrl.pathname)
 
+    console.log('is Logged in' ,isLoggedIn)
     if(isApiAuthRoute){
         return null
     }
     if(isAuthRoute){
         if(isLoggedIn){
-            return Response.redirect(new URL('/landing', nextUrl))
+            return Response.redirect(new URL('/welcome', nextUrl))
         }
         return null
     }

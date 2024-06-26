@@ -8,7 +8,7 @@ import { db } from '@/lib/db';
 const SignUpPage = async () => {
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
-      <FormComponent schema={schema} signUp={true} />
+      <FormComponent schema={schema} />
     </div>
   );
 }

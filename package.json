@@ -16,6 +16,7 @@
     "@mui/material": "^5.15.20",
     "@prisma/client": "^5.15.1",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "framer-motion": "^11.2.11",
     "i": "^0.3.7",
     "iron-session": "^8.0.2",

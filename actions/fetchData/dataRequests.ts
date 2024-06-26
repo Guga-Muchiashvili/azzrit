@@ -7,6 +7,7 @@ export const getUserByEmail = async(email : string) => {
                 email
             }
         })
+        console.log('existing user', existingUser)
 
         return existingUser
     } catch (error) {

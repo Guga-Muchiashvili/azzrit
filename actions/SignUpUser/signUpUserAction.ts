@@ -1,6 +1,6 @@
 "use server";
 import ISignUp from "@/app/signUp/SignUptype";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { toast } from "sonner";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "../fetchData/dataRequests";
@@ -30,7 +30,7 @@ export const SignUpUser = async (
 
   await db.user.create({
     data: {
-      username: data.username,
+      name: data.name,
       email: data.email,
       password: hashedPassword,
     },
