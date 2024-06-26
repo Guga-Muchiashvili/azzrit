@@ -12,6 +12,7 @@ import { useParams, useRouter } from "next/navigation";
 import { SignUpUser } from "@/actions/SignUpUser/signUpUserAction";
 import { signIn } from "@/auth";
 import { login } from "@/actions/SignInUser/SignIn";
+import { DEFAULT_ROUTE_NAVIGATE } from "@/routes";
 
 const FormComponent = ({ schema }: { schema: any }) => {
   const [url, seturl] = useState<string | undefined>("");
@@ -35,7 +36,7 @@ const FormComponent = ({ schema }: { schema: any }) => {
           toast.error(res?.error);
         } else {
           toast.success("Logged In succesfuly");
-          navigate.push("/welcome");
+          navigate.push(DEFAULT_ROUTE_NAVIGATE);
           return reset();
         }
       } catch (error) {}

@@ -15,3 +15,19 @@ export const getUserByEmail = async(email : string) => {
     }
    
 }
+
+export const getUserById = async(id : string) => {
+    try {
+        const existingUser = await db.user.findUnique({
+            where : {
+                id
+            }
+        })
+        console.log('existing user', existingUser)
+
+        return existingUser
+    } catch (error) {
+        return null
+    }
+   
+}

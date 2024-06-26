@@ -1,9 +1,9 @@
-import { auth, signOut } from '@/auth'
-import React from 'react'
+import { auth, signOut } from "@/auth";
+import { db } from "@/lib/db";
+import Image from "next/image";
 
-const WelcomePage = async() => {
+export default async function Home() {
   const session = await auth()
-  console.log(session)
   return (
     <div>
       {JSON.stringify(session)}
@@ -16,5 +16,3 @@ const WelcomePage = async() => {
     </div>
   )
 }
-
-export default WelcomePage
