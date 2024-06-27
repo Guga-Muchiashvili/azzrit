@@ -1,38 +1,46 @@
-import React, { useState } from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'; // Ensure correct import from 'next/navigation'
 import './landingStyle.scss';
 import Link from 'next/link';
+import background from '../assets/bg.jpg'
+import {motion} from 'framer-motion'
+import { landingTexts } from '../additional/texts';
+// import track from '../assets/sound.mp3'
+import useSound from 'use-sound';
+
 
 const Page = () => {
+  // console.log(track)
+  // const [play] = useSound(track)
+  
 
   return (
     <div
       className="backgroundImageDiv flex flex-col justify-center items-center gap-12"
       style={{
-        backgroundImage: `url('https://assetsio.gnwcdn.com/wise-guys-board-game-gale-force-nine-setup.png?width=1920&height=1920&fit=bounds&quality=80&format=jpg&auto=webp')`,
+        backgroundImage: `url('${background.src}')`,
         width: '100%',
         height: '100vh',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      <h1 className="flex md:text-5xl text-3xl gap-3 lg:text-8xl font-kanit font-extrabold italic text-shadow-custom">
-        Join the City of <span className="text-red-800">Mafia</span>
-      </h1>
-      <div className="flex gap-7 flex-col md:flex-row items-center justify-center text-center">
-        <Link
-          href={'/signUp'}
-          className="w-40 bg-red-800 shadow-black flex justify-center items-center shadow-md font-bold h-12 rounded-md text-white"
+      <motion.div className='w-fit px-8 gap-12 absolute flex flex-col h-2/3 text-left bottom-0 left-0 font-oswalid font-extrabold' >
+          {Object.entries(landingTexts).map((item, i) => (
+          <motion.h1 
+          id='landing-txt'
+          initial={{ opacity: 0, translateX: -1000 }} 
+          animate={{ opacity: 1, translateX: i * 40 }} 
+          transition={{ duration: 1, delay: i * .1, ease : "easeIn" }} 
+          className="text-red-600 text-9xl font-bold cursor-pointer hover:text-white duration-700 hover:text-[145px]"
         >
-          Sign Up
-        </Link>
-        <button
-          className="w-40 bg-white shadow-black shadow-md font-bold h-12 rounded-md text-red-600 text-shadow-none"
-        >
-          Read rules
-        </button>
-      </div>
-    
+        <Link href={`/${item[1]}`}>
+          {item[0].toUpperCase()}
+          </Link>
+        </motion.h1>
+          ))}
+      </motion.div>
     </div>
   );
 };

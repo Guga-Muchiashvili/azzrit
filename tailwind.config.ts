@@ -11,6 +11,7 @@ module.exports = {
       },
       fontFamily: {
         kanit: ['Kanit', 'sans-serif'],
+        oswalid: ["Oswald", "sans-serif"]
       },
     },
   },
