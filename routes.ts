@@ -7,5 +7,5 @@ export const AuthRoutes = [
     '/signIn'
 ]
 
-export const DEFAULT_ROUTE_NAVIGATE = '/'
+export const DEFAULT_ROUTE_NAVIGATE = '/landing'
 export const apiAuthPrefix = '/api/auth'
