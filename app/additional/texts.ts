@@ -1,3 +1,5 @@
+import noUserPhoto from '.././assets/user-img.png'
+
 export const rules = `თამაშში მონაწილეობას იღებს 11 მოთამაშე, მათ შორის, 7 პატიოსანი მოქალაქე, 3 მაფიოზი და 1 მანიაკი.
 
 🖤 ყოველ ღამე მაფია ირჩევს მსხვერპლს.
@@ -30,4 +32,6 @@ export const rules = `თამაშში მონაწილეობას
 
 პატიოსნები კი იმ შემთხვევაში თუ თამაშიდან გაიყვანენ მაფიოზებს და მანიაკს.`
 
-export const landingTexts = {'play' : "/",  'Rules' : '/', 'Registration ': "signUp"}
+export const landingTexts = {'play' : "/",  'Rating' : 'rating', 'Registration': "signUp"}
+
+export const noUserImage = noUserPhoto.src

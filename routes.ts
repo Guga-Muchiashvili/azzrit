@@ -1,5 +1,6 @@
 export const publicRoutes = [
     '/landing',
+    '/rating'
 ]
 
 export const AuthRoutes = [

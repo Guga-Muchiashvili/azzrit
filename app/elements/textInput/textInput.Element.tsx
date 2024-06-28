@@ -1,8 +1,9 @@
-import { TextField } from "@mui/material";
-import React from "react";
-import { Controller } from "react-hook-form";
+import { TextField } from '@mui/material';
+import React from 'react';
+import { Controller } from 'react-hook-form';
+import { ITextInputProps } from './textinputType';
 
-const TextInputElement = ({ id, placeholder, type, label, control } : any) => {
+const TextInputElement = ({ id, placeholder, type, label, control, error }: ITextInputProps) => {
   return (
     <Controller
       control={control}
@@ -12,7 +13,7 @@ const TextInputElement = ({ id, placeholder, type, label, control } : any) => {
           id={id}
           margin="normal"
           onChange={field.onChange}
-          value={field.value}
+          value={field.value || ''}
           placeholder={placeholder}
           fullWidth
           type={type}

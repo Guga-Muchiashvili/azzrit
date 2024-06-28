@@ -15,8 +15,9 @@ import {motion} from 'framer-motion'
 import LoaderElement from "@/app/elements/loading/loader";
 import TextInputElement from "@/app/elements/textInput/textInput.Element";
 import ButtonInputElement from "@/app/elements/button/buttonInput.Element";
+import { IFormComponentProps } from "./formComponentTypes";
 
-const FormComponent = ({ schema }: { schema: any }) => {
+const FormComponent = ({ schema }: IFormComponentProps) => {
   const [url, setUrl] = useState<string | undefined>("");
   const navigate = useRouter();
 
@@ -33,7 +34,7 @@ const FormComponent = ({ schema }: { schema: any }) => {
     setUrl(window.location.href.split("/").filter(Boolean).pop());
   }, []);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ISignIn | ISignUp) => {
     if (url !== "signUp") {
       try {
           const loginAsync = async () => {
@@ -42,7 +43,7 @@ const FormComponent = ({ schema }: { schema: any }) => {
               toast.error(res?.error);
             } else {
               toast.success("Logged In successfully");
-              navigate.push(DEFAULT_ROUTE_NAVIGATE);
+              navigate.push(DEFAULT_ROUTE_NAVIGATE || '/');
               reset();
             }
           };
@@ -53,7 +54,7 @@ const FormComponent = ({ schema }: { schema: any }) => {
     } else {
       try {
           const signUpAsync = async () => {
-            const response = await SignUpUser(data);
+            const response = await SignUpUser(data as ISignUp);
             if (response.error) {
               toast.error(response.error);
             } else {
@@ -75,7 +76,7 @@ const FormComponent = ({ schema }: { schema: any }) => {
 
   return (
     <form
-      className="w-full h-2/3 bg-white rounded-md px-7 flex flex-col items-center justify-start py-14"
+      className="w-full md:w-2/3 lg:w-full h-2/3 bg-white rounded-md px-7 flex flex-col items-center justify-start py-14"
       onSubmit={handleSubmit(onSubmit)}
     >
       <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5 }} className="font-semibold text-oswalid text-3xl text-black">

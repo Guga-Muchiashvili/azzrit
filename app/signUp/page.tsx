@@ -1,6 +1,6 @@
 import React from 'react';
 import {useRouter } from 'next/navigation';
-import FormComponent from '@/components/formComponent';
+import FormComponent from '@/components/FormComponent/formComponent';
 import schema from './schema';
 import './signUpStyle.scss';
 import Link from 'next/link';
@@ -15,10 +15,10 @@ const SignUpPage = async () => {
     <Link href={'/landing'}>
       <IoIosArrowBack className='text-black absolute text-xl top-3 left-3 cursor-pointer' />
       </Link>
-    <div className='w-full md:w-1/2 lg:w-1/3 h-full flex items-center justify-center'>
+    <div className='w-full  lg:w-1/3 h-full flex items-center justify-center'>
     <FormComponent schema={schema}/>
     </div>
-    <div className='lg:w-2/3 h-full relative hidden md:block w-1/2'>
+    <div className='lg:w-2/3 lg:block h-full relative hidden '>
     <Image
         src={background}
         alt="background"
