@@ -16,6 +16,7 @@ import LoaderElement from "@/app/elements/loading/loader";
 import TextInputElement from "@/app/elements/textInput/textInput.Element";
 import ButtonInputElement from "@/app/elements/button/buttonInput.Element";
 import { IFormComponentProps } from "./formComponentTypes";
+import GoogleElementButton from "@/app/elements/google/googleElementButton";
 
 const FormComponent = ({ schema }: IFormComponentProps) => {
   const [url, setUrl] = useState<string | undefined>("");
@@ -184,9 +185,10 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
       )}
 
       <div className="mt-2 flex flex-col justify-center items-center">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, ease: "easeIn" }}>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, ease: "easeIn" }} className="mt-5">
           <ButtonInputElement text={url === "signUp" ? "Sign up" : "Sign in"} />
         </motion.div>
+        <GoogleElementButton/>
         <div className="mt-8 text-gray-500">
           {url === "signUp" ? (
             <Link href="/signIn">

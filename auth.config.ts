@@ -3,6 +3,9 @@ import { NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { getUserByEmail, getUserById } from './actions/fetchData/dataRequests';
 import { DefaultSession } from 'next-auth';
+import Google from 'next-auth/providers/google'
+import Facebook from 'next-auth/providers/facebook'
+import { db } from './lib/db';
 
 type extenderUser = DefaultSession['user'] & {
     role : 'ADMIN' | "USER"
@@ -17,6 +20,14 @@ declare module 'next-auth' {
 
 export default {
     providers: [
+        Google({
+            clientId : process.env.GOOGLE_CLIENT_ID,
+            clientSecret : process.env.GOOGLE_CLIENT_SECRET
+        }),
+        Facebook({
+            clientId : process.env.FACEBOOK_CLIENT_ID,
+            clientSecret : process.env.FACEBOOK_CLIENT_SECRET
+        }),
         Credentials({
             async authorize(credentials :  Partial<Record<string, unknown>>) {
                 if (!credentials?.email || !credentials?.password) {
@@ -48,6 +59,7 @@ export default {
             if(token.sub && session.user){
                 session.user.id = token.sub
             } 
+            console.log(session)
             return session
         },
         async jwt ({token}){
@@ -56,5 +68,19 @@ export default {
             if(!existingUser) return token
             return token
         }
+    },
+    events : {
+
+       async linkAccount ({user}){
+        await db.user.update({
+            where : {id : user.id},
+            data : {emailVerified : new Date()}
+        })
+       }
+    },
+    pages : {
+        signIn : '/signIn',
+        signOut : '/signOut',
+        error : '/error'
     }
 } satisfies NextAuthConfig;

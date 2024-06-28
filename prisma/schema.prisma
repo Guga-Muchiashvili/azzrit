@@ -13,7 +13,7 @@ model Account {
   userId             String  @map("user_id") @db.ObjectId
   type               String
   provider           String
-  providerAccountId  String  @map("provider_account_id")
+  providerAccountId  String  
   refresh_token      String?
   access_token       String?
   expires_at         Int?
@@ -25,14 +25,13 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@unique([provider, providerAccountId])
-  @@map("accounts")
 }
 
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name      String?
   email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
+  emailVerified DateTime?
   image         String?
   password      String?
   accounts      Account[]

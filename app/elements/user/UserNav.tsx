@@ -9,6 +9,7 @@ import { IoMdLogIn } from "react-icons/io";
 import Link from 'next/link';
 import { MdLogin } from "react-icons/md";
 import useDevice from '@/hooks/getDeviceHook';
+import Image from 'next/image';
 
 const Usernav = () => {
   const { data: session, status } = useSession();
@@ -19,14 +20,29 @@ const Usernav = () => {
     setShowModal(!showModal);
   };
 
+  console.log(session?.user.image)
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: "easeIn" }} className='absolute top-5 right-8 text-red-600 font-poppins'>
-      <IoMdPerson
+      {session?.user.image ? (
+          <Image
+          src={session.user.image}
+          className='w-12 h-12 rounded-full cursor-pointer'
+          onClick={device === 'mobile' ? handleInteraction : undefined}
+        onMouseEnter={device !== 'mobile' ? () => setShowModal(true) : undefined}
+        onMouseLeave={device !== 'mobile' ? () => setShowModal(false) : undefined}
+          alt='pfp'
+          width={20}
+          height={20}
+          />
+      ) : (
+        <IoMdPerson
         className='text-5xl border-2 border-red-600 hover:bg-white duration-500 ease-in bg-black cursor-pointer rounded-full p-[5px]'
         onClick={device === 'mobile' ? handleInteraction : undefined}
         onMouseEnter={device !== 'mobile' ? () => setShowModal(true) : undefined}
         onMouseLeave={device !== 'mobile' ? () => setShowModal(false) : undefined}
       />
+      )}
+      
       {showModal && (
         <div
           className='absolute top-10 z-10 w-48 right-1 h-fit p-5'

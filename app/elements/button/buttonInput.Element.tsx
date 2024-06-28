@@ -3,7 +3,7 @@ import React from 'react'
 
 const ButtonInputElement = ({text} : {text : string}) => {
   return (
-    <Button className='mt-8' type='submit' variant="outlined">{text}</Button>
+    <Button className='mt-3' type='submit' variant="outlined">{text}</Button>
   )
 }
 

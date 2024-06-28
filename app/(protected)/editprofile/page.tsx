@@ -16,7 +16,7 @@ const EditProfilePage = () => {
   console.log(data)
   const defaultValues : IEditUser = {
     email : data?.user.email,
-    image : data?.user.image ? data.user.email : noUserImage,
+    image : data?.user.image ? data.user.image : noUserImage,
     name : data?.user.name,
   }
 
