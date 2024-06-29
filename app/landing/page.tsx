@@ -31,7 +31,7 @@ const Page = () => {
       <Usernav />
       <VolumeElement />
       <motion.div
-        className={`sm:w-fit sm:items-start px-3 gap-12 md:gap-16 absolute flex flex-col h-2/3 text-left justify-centerc w-full items-center bottom-0 left-0 font-oswalid font-extrabold`}
+        className={`sm:w-fit sm:items-start px-3 gap-12 md:gap-16 absolute flex flex-col h-2/3 text-left justify-centerc w-full items-center bottom-0 md:bottom-16 left-0 font-oswalid font-extrabold`}
       >
         {Object.entries(landingTexts).map((item, i) =>
           isRegistered && item[0] === "Registration" ? null : (
