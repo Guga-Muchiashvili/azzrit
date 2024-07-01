@@ -1,3 +1,4 @@
+'use server'
 import { getVerificationTokenByEmail } from '@/actions/verificationToken/verificationTokens'
 import {v4 as uuid} from 'uuid'
 import { db } from './db'
@@ -22,6 +23,8 @@ export const generateVerificationToken = async(email : string) => {
             expires
         }
     })
+
+    console.log('token created')
 
     return verificationToken
 }

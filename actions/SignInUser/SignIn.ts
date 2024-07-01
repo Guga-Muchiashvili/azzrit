@@ -3,14 +3,12 @@ import { AuthError } from "next-auth";
 import { signIn } from "next-auth/react";
 import { getUserByEmail } from "../fetchData/dataRequests";
 import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const login = async (values : ISignIn) => {
     const { email, password } = values;
     const existingUser = await getUserByEmail(email)
 
-    console.log(existingUser)
-
-    
     try {
         if(!existingUser?.email || !existingUser.password || !existingUser){
             return {error : "You are not Registered"}
@@ -18,16 +16,20 @@ export const login = async (values : ISignIn) => {
 
            if(!existingUser.emailVerified) {
                 const verificationToken = await generateVerificationToken(existingUser.email)
+
+                await sendVerificationEmail(
+                    verificationToken.email,
+                    verificationToken.token
+                  )
+
                 return {succes : "Confirmation email sent!"}
             }
-        
         const result = await signIn('credentials', {
             email,
             password,
             redirect: false,
         });
 
-        console.log('result', result)
 
         if (result?.error) {
             if (result.error === 'CredentialsSignin') {

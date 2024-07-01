@@ -32,6 +32,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
     "react-icons": "^5.2.1",
+    "react-spinners": "^0.14.1",
     "resend": "^3.4.0",
     "sass": "^1.77.6",
     "sonner": "^1.5.0",
