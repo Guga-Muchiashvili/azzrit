@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import { toast } from "sonner";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "../fetchData/dataRequests";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const SignUpUser = async (
   data: ISignUp
@@ -36,8 +38,15 @@ export const SignUpUser = async (
     },
   });
 
+  const verificationToken = await generateVerificationToken(data.email)
+
+  await sendVerificationEmail(
+    verificationToken.email,
+    verificationToken.token
+  )
+
   return {
     success: true,
-    message: "Account Creates",
+    message: "email sent",
   };
 };

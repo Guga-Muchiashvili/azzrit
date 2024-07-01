@@ -39,12 +39,13 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
     if (url !== "signUp") {
       try {
           const loginAsync = async () => {
+            console.log('davai')
             const res = await login(data);
             if (res?.error) {
               toast.error(res?.error);
             } else {
-              toast.success("Logged In successfully");
-              navigate.push(DEFAULT_ROUTE_NAVIGATE || '/');
+              toast.success(res?.succes);
+              // navigate.push(DEFAULT_ROUTE_NAVIGATE || '/');
               reset();
             }
           };
@@ -60,7 +61,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
               toast.error(response.error);
             } else {
               toast.success(response.message);
-              navigate.push("/signIn");
+              // navigate.push("/signIn");
               reset();
             }
           };

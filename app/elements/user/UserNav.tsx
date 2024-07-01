@@ -75,7 +75,7 @@ const Usernav = () => {
                       window.location.href = window.location.href + '?refresh=' + new Date().getTime();
                     }}
                   >
-                    LogOff
+                    Log Out
                     <FaSignOutAlt />
                   </button>
                 </div>

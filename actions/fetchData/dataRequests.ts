@@ -1,3 +1,4 @@
+'use server'
 import { db } from "@/lib/db"
 
 export const getUserByEmail = async(email : string) => {
@@ -7,7 +8,7 @@ export const getUserByEmail = async(email : string) => {
                 email
             }
         })
-        console.log('existing user', existingUser)
+        console.log('heii', existingUser)
 
         return existingUser
     } catch (error) {
@@ -16,7 +17,7 @@ export const getUserByEmail = async(email : string) => {
    
 }
 
-export const getUserById = async(id : string) => {
+export const getUserById = async(id : string | undefined) => {
     try {
         const existingUser = await db.user.findUnique({
             where : {
