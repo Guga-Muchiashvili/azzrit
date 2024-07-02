@@ -2,7 +2,9 @@ export const publicRoutes = [
     '/landing',
     '/rating',
     '/error',
-    '/new-verification'
+    '/new-verification',
+    '/reset',
+    '/reset/password'
 ]
 
 export const AuthRoutes = [

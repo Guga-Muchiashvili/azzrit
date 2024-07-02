@@ -54,16 +54,16 @@ const Usernav = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, ease: 'easeIn' }}
-            className='py-2 gap-2 items-center flex flex-col h-fit rounded-md bg-black border-[1px] px-2 border-red-500 bg-opacity-75 absolute text-white right-2 top-5'
+            className='py-1 gap-2 items-center flex flex-col h-fit rounded-md bg-black border-[1px] px-2 border-red-500 bg-opacity-75 absolute text-white right-2 top-5'
             style={{ minWidth: 'fit-content', whiteSpace: 'nowrap' }}
           >
             {session ? (
               <div>
-                <motion.div className='flex flex-col pb-2'>
+                <motion.div className='flex flex-col font-semibold gap-3 p-1 pb-1'>
                   <motion.p>name: {session?.user.name}</motion.p>
                   <motion.p>email: {session?.user.email}</motion.p>
                 </motion.div>
-                <div className='flex w-full text-red-500 border-t-[1px] border-red-500 pt-2 gap-1'>
+                <div className='flex w-full text-red-500 border-t-[1px] border-red-500 py-3 gap-3'>
                   <Link href={'/editprofile'} className='flex hover:text-white duration-500 ease-in-out border-[1px] border-red-500 rounded-xl p-[3px] justify-center gap-2 items-center w-1/2'>
                     edit
                     <FaEdit />

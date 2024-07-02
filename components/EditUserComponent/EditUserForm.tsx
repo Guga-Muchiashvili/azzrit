@@ -63,7 +63,7 @@ const EditUserForm = ({ schema, defaultValues }: IEditUserProps) => {
             width={120}
             height={120}
             alt='pfp'
-            className='rounded-full cursor-pointer p-3 hover:bg-gray-700 hover:bg-opacity-25 duration-500 ease-in '
+            className='rounded-full cursor-pointer p-3 hover:bg-gray-800 hover:bg-opacity-25 duration-500 ease-in '
             />
           <TextInputElement
             id="name"

@@ -200,6 +200,13 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
               error={errors}
             />
           </motion.div>
+          <motion.div 
+           initial={{ opacity: 0,}}
+           animate={{ opacity: 1, }}
+           transition={{ duration: 1, delay: 0.3, ease: "easeIn" }}
+          className="w-full flex items-start mt-5">
+          <Link className="text-sm font-semibold underline" href={'/reset'}>Forgot Password?</Link>
+          </motion.div>
         </>
       ) : (
         <LoaderElement />
