@@ -113,6 +113,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.1, ease: "easeIn" }}
           >
             <TextInputElement
+            disabled={false}
               id="name"
               placeholder="Enter name"
               type="text"
@@ -128,6 +129,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.3, ease: "easeIn" }}
           >
             <TextInputElement
+            disabled={false}
               id="email"
               placeholder="Enter email"
               type="email"
@@ -143,6 +145,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.5, ease: "easeIn" }}
           >
             <TextInputElement
+              disabled={false}
               id="password"
               placeholder="Enter password"
               type="password"
@@ -158,6 +161,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.7, ease: "easeIn" }}
           >
             <TextInputElement
+            disabled={false}
               id="confirmPassword"
               placeholder="Confirm password"
               type="password"
@@ -176,6 +180,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.3, ease: "easeIn" }}
           >
             <TextInputElement
+            disabled={false}
               id="email"
               placeholder="Enter email"
               type="email"
@@ -192,6 +197,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.3, ease: "easeIn" }}
           >
             <TextInputElement
+            disabled={false}
               id="password"
               placeholder="Enter password"
               type="password"

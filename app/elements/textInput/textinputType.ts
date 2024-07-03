@@ -9,5 +9,6 @@ export interface ITextInputProps {
     type : string,
     label : string, 
     control : any
-    error : FieldErrors<ISignIn | ISignUp | IEditUser>
+    error : FieldErrors<ISignIn | ISignUp | IEditUser>,
+    disabled : boolean
 }

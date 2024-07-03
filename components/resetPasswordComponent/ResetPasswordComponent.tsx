@@ -45,7 +45,7 @@ const ResetPasswordComponent = ({schema} : IResetPasswordFormComponentProps) => 
   return (
     <form onSubmit={handleSubmit(submit)} className='w-96 h-72 bg-white gap-4 px-10 rounded-lg flex items-center justify-center flex-col'>
         <motion.h1>Reset your password</motion.h1>
-        <TextInputElement control={control} error={errors} id='email' placeholder='enter email' label='enter email' type='email' />
+        <TextInputElement disabled={false} control={control} error={errors} id='email' placeholder='enter email' label='enter email' type='email' />
         {sent == false ?  
         <motion.div className='w-full h-12 rounded-lg px-2 flex items-center justify-left bg-opacity-80 mt-2 bg-red-200'>
         <BiError className='text-red-500 text-3xl'/>

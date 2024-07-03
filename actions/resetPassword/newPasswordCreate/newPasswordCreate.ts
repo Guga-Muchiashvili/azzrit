@@ -5,18 +5,18 @@ import { getPasswordResetTokenByToken } from "../resetPasswordTokens/resetPasswo
 import { getUserByEmail } from "@/actions/fetchData/dataRequests"
 import { db } from '@/lib/db'
 
-export const newPassword = async(password : string, token : string) => {
+export const newPassword = async(password : string, token : string | undefined) => {
     if(!token) return {error : "missing Token!"}
 
     const existingToken = await getPasswordResetTokenByToken(token)
 
     if(!token) return {error : "Token Not found"}
 
-    if(new Date(existingToken?.expires) < new Date() ) return {error : "token expired"}
+    if(new Date(existingToken?.expires as any) < new Date() ) return {error : "token expired"}
 
-    const existingUser = await getUserByEmail(existingToken?.email)
+    const existingUser = await getUserByEmail(existingToken?.email as string)
 
-    if(!existingUser) return {error : "Email does not exists"}
+    if(!existingUser) return {error : "Session Expired"}
 
     const hashedPassword = await bcrypt.hash(password, 10)
 

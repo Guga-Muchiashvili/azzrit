@@ -23,7 +23,7 @@ const Usernav = () => {
   console.log(session?.user.image)
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: "easeIn" }} className='absolute top-5 right-8 text-red-600 font-poppins'>
-      {session?.user.image ? (
+      {typeof session?.user.image?.sadw == 'string' ? (
           <Image
           src={session.user.image}
           className='w-12 h-12 rounded-full cursor-pointer'
@@ -58,10 +58,10 @@ const Usernav = () => {
             style={{ minWidth: 'fit-content', whiteSpace: 'nowrap' }}
           >
             {session ? (
-              <div>
+              <div className='w-72'>
                 <motion.div className='flex flex-col font-semibold gap-3 p-1 pb-1'>
-                  <motion.p>name: {session?.user.name}</motion.p>
-                  <motion.p>email: {session?.user.email}</motion.p>
+                  <motion.p>Name: {session?.user.name}</motion.p>
+                  <motion.p>Email: {session?.user.email}</motion.p>
                 </motion.div>
                 <div className='flex w-full text-red-500 border-t-[1px] border-red-500 py-3 gap-3'>
                   <Link href={'/editprofile'} className='flex hover:text-white duration-500 ease-in-out border-[1px] border-red-500 rounded-xl p-[3px] justify-center gap-2 items-center w-1/2'>
@@ -69,7 +69,7 @@ const Usernav = () => {
                     <FaEdit />
                   </Link>
                   <button
-                    className='flex hover:text-white duration-500 ease-in-out border-[1px] border-red-500 rounded-xl p-[3px] justify-center gap-2 items-center w-1/2'
+                    className='flex hover:text-white duration-500 ease-in-out border-[1px] border-red-500 rounded-xl pl-4 pr-2 justify-center gap-2 items-center w-1/2'
                     onClick={async () => {
                       await signOutUser();
                       window.location.href = window.location.href + '?refresh=' + new Date().getTime();
@@ -81,12 +81,12 @@ const Usernav = () => {
                 </div>
               </div>
             ) : (
-              <div className='flex flex-col gap-2'>
+              <div className='flex flex-col p-3 gap-2'>
                 <Link href={'/signIn'} className='w-full hover:text-red-500 duration-500 ease-in-out flex items-center justify-between gap-2'>
-                  Sign In <IoMdLogIn />
+                <IoMdLogIn /> Sign In 
                 </Link>
                 <Link href={'/signUp'} className='w-full hover:text-red-500 duration-500 ease-in-out flex items-center justify-between gap-2'>
-                  Sign Up <MdLogin />
+                <MdLogin /> Sign Up 
                 </Link>
               </div>
             )}

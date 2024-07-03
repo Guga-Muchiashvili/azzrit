@@ -3,13 +3,14 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import { ITextInputProps } from './textinputType';
 
-const TextInputElement = ({ id, placeholder, type, label, control, error }: ITextInputProps) => {
+const TextInputElement = ({ id, placeholder, type, label, control, error, disabled }: ITextInputProps) => {
   return (
     <Controller
       control={control}
       name={id}
       render={({ field, fieldState }) => (
         <TextField
+          disabled={disabled}
           id={id}
           margin="normal"
           onChange={field.onChange}

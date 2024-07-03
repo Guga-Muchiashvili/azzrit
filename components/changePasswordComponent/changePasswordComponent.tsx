@@ -14,9 +14,9 @@ import { MdDone } from "react-icons/md";
 
 const ChangePasswordComponent = ({schema} : IChangePasswordComponentProps) => {
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const token: string | undefined = searchParams.get("token") || undefined;
   const navigate = useRouter()
-  const [isSucess, setisSucess] = useState({succes : null, message : ""})
+  const [isSucess, setisSucess] = useState<{succes : null | boolean, message : string | undefined}>({succes : null, message : ""})
 
   const {
     handleSubmit,
@@ -45,8 +45,8 @@ const ChangePasswordComponent = ({schema} : IChangePasswordComponentProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-96 h-96 bg-white gap-2 px-10 rounded-lg flex items-center justify-center flex-col">
       <motion.h1>change your password</motion.h1>
-        <TextInputElement control={control} error={errors} id="password" label="password" placeholder="enter password" type="password" />
-        <TextInputElement control={control} error={errors} id="confirmPassword" label="password" placeholder="confirm password" type="password" />
+        <TextInputElement disabled={false} control={control} error={errors} id="password" label="password" placeholder="enter password" type="password" />
+        <TextInputElement disabled={false} control={control} error={errors} id="confirmPassword" label="password" placeholder="confirm password" type="password" />
         {isSucess.succes  == false ?  
         <motion.div className='w-full h-12 rounded-lg px-2 flex items-center justify-left bg-opacity-80 mt-2 bg-red-200'>
         <BiError className='text-red-500 text-3xl'/>

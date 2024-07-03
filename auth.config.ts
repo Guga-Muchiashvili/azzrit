@@ -69,13 +69,18 @@ export default {
             if(token.sub && session.user){
                 session.user.id = token.sub
             } 
-            console.log(session)
+            if(session.user){
+                session.user.name = token.name
+                session.user.image = token.picture
+            }
             return session
         },
         async jwt ({token}){
             if(!token.sub) return token
             const existingUser = await getUserById(token.sub)
             if(!existingUser) return token
+            token.name = existingUser.name
+            token.picture = existingUser.image
             return token
         }
     },
