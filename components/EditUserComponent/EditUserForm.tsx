@@ -33,6 +33,7 @@ const EditUserForm = ({ schema, defaultValues }: IEditUserProps) => {
   });
 
   const FormEmail = watch('email')
+  const FormName = watch('name')
 
   const onSubmit = async (val: IEditUser, e : any) => {
 
@@ -61,6 +62,7 @@ const EditUserForm = ({ schema, defaultValues }: IEditUserProps) => {
     const data =  new FormData()
     data.append('image', img)
     data.append('email', FormEmail as string)
+    data.append('name', FormName as string)
     console.log('before')
     const res = await updateUser(data);
     console.log(res)

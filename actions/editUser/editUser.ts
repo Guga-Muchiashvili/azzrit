@@ -6,9 +6,10 @@ import { login } from "../SignInUser/SignIn"
 
 export const updateUser = async (data: FormData) => {
   const email = data.get('email') as string;
+  const name = data.get('name') as string;
   const image = data.get('image') as File
   console.log(image)
-  console.log(image, 'edit')
+  console.log(image.name, 'edit')
     const CurrentUser = await getUserByEmail(email as string);
     console.log(CurrentUser)
   
@@ -19,8 +20,9 @@ export const updateUser = async (data: FormData) => {
         email: data.email,
       },
       data: {
-        image: data.image,
-        name: data.name,
+        image: image.name,
+        name: name,
+        email
       },
     });
   
