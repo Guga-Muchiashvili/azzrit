@@ -1,3 +1,4 @@
+
 export const publicRoutes = [
     '/landing',
     '/rating',

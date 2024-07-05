@@ -4,25 +4,21 @@ import { getUserByEmail } from "../fetchData/dataRequests"
 import { db } from "@/lib/db"
 import { login } from "../SignInUser/SignIn"
 
-export const updateUser = async (data: FormData) => {
-  const email = data.get('email') as string;
-  const name = data.get('name') as string;
-  const image = data.get('image') as File
-  console.log(image)
-  console.log(image.name, 'edit')
-    const CurrentUser = await getUserByEmail(email as string);
-    console.log(CurrentUser)
+export const updateUser = async (data: IEditUser) => {
+  
+    const CurrentUser = await getUserByEmail(data.email as string);
+    // console.log(CurrentUser)
   
     if (!CurrentUser) return { error: "something went wrong" };
   
     const updatedUser = await db.user.update({
       where: {
-        email: data.email,
+        email: data.email as string,
       },
       data: {
-        image: image.name,
-        name: name,
-        email
+        image: data.image,
+        name: data.name,
+        email : data.email
       },
     });
   

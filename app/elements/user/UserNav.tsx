@@ -10,6 +10,8 @@ import Link from 'next/link';
 import { MdLogin } from "react-icons/md";
 import useDevice from '@/hooks/getDeviceHook';
 import Image from 'next/image';
+import { noUserImage } from '@/app/additional/texts';
+import { IUser } from '@/types/types';
 
 const Usernav = () => {
   const { data: session, status } = useSession();
@@ -23,16 +25,16 @@ const Usernav = () => {
   console.log(session?.user.image)
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: "easeIn" }} className='absolute top-5 right-8 text-red-600 font-poppins'>
-      {typeof session?.user.image?.sadw == 'string' ? (
+      {typeof session?.user.image == 'string' ? (
           <Image
-          src={session.user.image}
+          src={`${session?.user.image == noUserImage ? noUserImage : session.user.image.includes('http') ? session.user.image : `/uploads/${session.user.image}` }`}
           className='w-12 h-12 rounded-full cursor-pointer'
           onClick={device === 'mobile' ? handleInteraction : undefined}
         onMouseEnter={device !== 'mobile' ? () => setShowModal(true) : undefined}
         onMouseLeave={device !== 'mobile' ? () => setShowModal(false) : undefined}
           alt='pfp'
-          width={20}
-          height={20}
+          width={100}
+          height={100}
           />
       ) : (
         <IoMdPerson
