@@ -89,7 +89,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
     }
   };
 
-  if (url !== "signIn" && url !== "signUp") return <LoaderElement />;
+  if (url !== "signIn" && url !== "signUp" && url !== 'landing') return <LoaderElement />;
 
   return (
     <form
@@ -171,7 +171,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
             />
           </motion.div>
         </>
-      ) : url === "signIn" ? (
+      ) : url === "signIn" || url == 'landing' ? (
         <>
           <motion.div
             className="w-full"

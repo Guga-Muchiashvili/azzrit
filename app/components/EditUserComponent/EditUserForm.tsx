@@ -13,8 +13,9 @@ import ButtonInputElement from "@/app/elements/button/buttonInput.Element";
 import TextInputElement from "@/app/elements/textInput/textInput.Element";
 import IEditUser from "@/app/(protected)/editprofile/types";
 import { useRouter } from "next/navigation";
+import { signOutUser } from "@/actions/signOut/signOutUser";
 
-const EditUserForm = ({ schema, defaultValues }: IEditUserProps) => {
+const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
   const { data: session, update: updateSession } = useSession();
   const [file, setFile] = useState<File | undefined>();
   const [imageUrl, setImageUrl] = useState<string | undefined>();
@@ -29,7 +30,6 @@ const EditUserForm = ({ schema, defaultValues }: IEditUserProps) => {
     watch
   } = useForm<IEditUser>({
     resolver: yupResolver(schema) as any,
-    defaultValues,
   });
 
   const onSubmit = async (val: IEditUser) => {
@@ -39,7 +39,10 @@ const EditUserForm = ({ schema, defaultValues }: IEditUserProps) => {
       name: val.name,
     };
 
+    console.log(data)
+
     const res = await updateUser(data);
+
     if (res.success) {
       updateSession({ ...session, user: res.user });
       toast.success("User updated successfully");
@@ -47,6 +50,7 @@ const EditUserForm = ({ schema, defaultValues }: IEditUserProps) => {
       return toast.error("Something went wrong");
     }
 
+    console.log('done')
     navigate.push('/landing')
   };
 
@@ -81,12 +85,14 @@ const EditUserForm = ({ schema, defaultValues }: IEditUserProps) => {
   };
 
   useEffect(() => {
-    reset(defaultValues);
+    setImageUrl(defaultValues.image as string)
+    reset(session?.user);
   }, [defaultValues, reset]);
+
 
   return (
     <form
-      className="w-full sm:w-2/3 md:w-2/5 lg:w-1/3 h-full bg-white px-7 flex flex-col items-center justify-center py-14"
+      className={`w-full ${onLanding ? 'w-full' : "sm:w-2/3 md:w-2/5 lg:w-1/3"} h-full bg-white px-7 flex flex-col items-center justify-center py-14`}
       onSubmit={handleSubmit(onSubmit)}
     >
       <motion.h1
@@ -159,7 +165,14 @@ const EditUserForm = ({ schema, defaultValues }: IEditUserProps) => {
         transition={{ duration: 1.2, ease: "easeIn" }}
         className="mt-3"
       >
+        <div className="w-52 flex gap-6">
+          <div>
         <ButtonInputElement text="Edit" />
+          </div>
+        <div onClick={() => signOutUser()}>
+        <ButtonInputElement text="Sign Out"/>
+        </div>
+        </div>
       </motion.div>
     </form>
   );

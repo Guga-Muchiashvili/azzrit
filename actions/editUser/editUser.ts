@@ -5,7 +5,7 @@ import { db } from "@/lib/db"
 import { login } from "../SignInUser/SignIn"
 
 export const updateUser = async (data: IEditUser) => {
-  
+    console.log('movedi aq')
     const CurrentUser = await getUserByEmail(data.email as string);
     // console.log(CurrentUser)
   
@@ -22,5 +22,6 @@ export const updateUser = async (data: IEditUser) => {
       },
     });
   
+    console.log('daje aqac var')
     return { success: "user updated", user: updatedUser };
   };

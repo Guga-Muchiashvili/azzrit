@@ -4,5 +4,5 @@ import { ObjectSchema } from "yup";
 
 export interface IEditUserProps {
     schema : ObjectSchema<IEditUser>,
-    defaultValues : IEditUser
+    onLanding : boolean
 }
