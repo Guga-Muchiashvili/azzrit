@@ -167,17 +167,16 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, ease: "easeIn" }}
-        className="mt-3"
+        className="mt-3 w-full"
       >
-        <div className="w-52 flex gap-6">
-          <div>
-        <ButtonInputElement text="Edit" />
-          </div>
-        <div onClick={() => signOutUser()}>
-        <ButtonInputElement text="Sign Out"/>
-        </div>
+         <button className="w-full h-12 text-blue-500 hover:bg-blue-300 hover:text-white hover:border-none duration-200 ease-in rounded-lg font-normal border-[1px] border-blue-500 ">Save</button>
+          <div className="absolute bottom-5 left-0 px-6 w-full " onClick={async() => {
+            signOutUser()
+            }}>
+         <button className="w-full h-12 text-red-500 hover:bg-red-300 hover:text-white hover:border-none duration-200 ease-in rounded-lg font-normal border-[1px] border-red-500 ">Sign Out</button>
         </div>
       </motion.div>
+      
     </form>
   );
 };

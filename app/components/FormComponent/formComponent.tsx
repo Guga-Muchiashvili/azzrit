@@ -89,11 +89,14 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
     }
   };
 
-  if (url !== "signIn" && url !== "signUp" && url !== 'landing') return <LoaderElement />;
+  if (url !== "signIn" && url !== "signUp" && url !== "landing")
+    return <LoaderElement />;
 
   return (
     <form
-      className={`${onLanding ? 'w-full' : "w-full md:w-2/3 lg:w-full"} h-2/3 bg-white rounded-md px-7 flex flex-col items-center justify-start py-14`}
+      className={`${
+        onLanding ? "w-full" : "w-full md:w-2/3 lg:w-full"
+      } h-2/3 bg-white rounded-md px-7 flex flex-col items-center justify-start py-14`}
       onSubmit={handleSubmit(onSubmit)}
     >
       <motion.h1
@@ -102,7 +105,7 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
         transition={{ duration: 1.5 }}
         className="font-semibold text-oswalid text-3xl text-black"
       >
-        {url === "signIn" ? "Sign In" : url == 'signUp' ? 'Sign Up' : "Sign In"}
+        {url === "signIn" ? "Sign In" : url == "signUp" ? "Sign Up" : "Sign In"}
       </motion.h1>
       {url === "signUp" ? (
         <>
@@ -113,7 +116,7 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.1, ease: "easeIn" }}
           >
             <TextInputElement
-            disabled={false}
+              disabled={false}
               id="name"
               placeholder="Enter name"
               type="text"
@@ -129,7 +132,7 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.3, ease: "easeIn" }}
           >
             <TextInputElement
-            disabled={false}
+              disabled={false}
               id="email"
               placeholder="Enter email"
               type="email"
@@ -161,7 +164,7 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.7, ease: "easeIn" }}
           >
             <TextInputElement
-            disabled={false}
+              disabled={false}
               id="confirmPassword"
               placeholder="Confirm password"
               type="password"
@@ -171,7 +174,7 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
             />
           </motion.div>
         </>
-      ) : url === "signIn" || url == 'landing' ? (
+      ) : url === "signIn" || url == "landing" ? (
         <>
           <motion.div
             className="w-full"
@@ -180,7 +183,7 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.3, ease: "easeIn" }}
           >
             <TextInputElement
-            disabled={false}
+              disabled={false}
               id="email"
               placeholder="Enter email"
               type="email"
@@ -197,7 +200,7 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
             transition={{ duration: 1, delay: 0.3, ease: "easeIn" }}
           >
             <TextInputElement
-            disabled={false}
+              disabled={false}
               id="password"
               placeholder="Enter password"
               type="password"
@@ -206,12 +209,18 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
               error={errors}
             />
           </motion.div>
-          <motion.div 
-           initial={{ opacity: 0,}}
-           animate={{ opacity: 1, }}
-           transition={{ duration: 1, delay: 0.3, ease: "easeIn" }}
-          className="w-full flex items-start mt-5">
-          <Link className="text-sm font-semibold underline text-gray-600" href={'/reset'}>Forgot Password?</Link>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.3, ease: "easeIn" }}
+            className="w-full flex items-start mt-5"
+          >
+            <Link
+              className="text-[10px] font-semibold underline text-gray-600"
+              href={"/reset"}
+            >
+              Forgot Password?
+            </Link>
           </motion.div>
         </>
       ) : (
@@ -223,9 +232,17 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeIn" }}
-          className="mt-5"
+          className="mt-5 w-full"
         >
-          <ButtonInputElement text={url === "signUp" ? "Sign up" : "Sign in"} />
+          {url == "landing" || url == "signIn" ? (
+            <button className="w-full h-12 text-blue-500 hover:bg-blue-300 hover:text-white hover:border-none duration-200 ease-in rounded-lg font-normal border-[1px] border-blue-500 ">
+              Save
+            </button>
+          ) : (
+            <ButtonInputElement
+              text={url === "signUp" ? "Sign up" : "Sign in"}
+            />
+          )}
         </motion.div>
         <GoogleElementButton />
         <div className="mt-8 text-gray-500">
