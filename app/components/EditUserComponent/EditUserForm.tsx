@@ -123,6 +123,8 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
             <Image
               src={
                 session?.user.image == null ? noUserImage :
+                session?.user.image.includes('http') ? 
+                session.user.image : 
                 session?.user.image ?
                    `/uploads/${session?.user.image}` : ""
               }
