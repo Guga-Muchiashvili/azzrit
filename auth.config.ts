@@ -29,28 +29,25 @@ export default {
             clientSecret : process.env.FACEBOOK_CLIENT_SECRET
         }),
         Credentials({
-            async authorize(credentials :  Partial<Record<string, unknown>>) {
-                if (!credentials?.email || !credentials?.password) {
+            async authorize(credentials: Partial<Record<string, unknown>>) {
+                if (!credentials?.email || typeof credentials.email !== 'string' || !credentials?.password || typeof credentials.password !== 'string') {
                     return null;
                 }
-
+        
                 const user = await getUserByEmail(credentials.email as string);
-
-                console.log('user', user)
-
-                if (!user || !user.password) {
+        
+                console.log('user', user);
+        
+                if (!user || !user.password || typeof user.password !== 'string') {
                     return null;
                 }
-
-                const passwordsMatch = await bcrypt.compare(
-                    credentials.password,
-                    user.password
-                );
-
-                console.log('passwordsMatch', passwordsMatch)
-
-                if(!passwordsMatch) return null
-                return user
+        
+                const passwordsMatch = await bcrypt.compare(credentials.password, user.password);
+        
+                if (!passwordsMatch) {
+                    return null;
+                }
+                return user;
             }
         })
     ],

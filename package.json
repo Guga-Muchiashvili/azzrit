@@ -41,6 +41,7 @@
     "react-spinners": "^0.14.1",
     "resend": "^3.4.0",
     "sass": "^1.77.6",
+    "sharp": "^0.33.4",
     "sonner": "^1.5.0",
     "use-sound": "^4.0.3",
     "uuid": "^10.0.0",

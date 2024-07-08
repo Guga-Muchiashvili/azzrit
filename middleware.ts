@@ -4,7 +4,7 @@ import { AuthRoutes, DEFAULT_ROUTE_NAVIGATE, apiAuthPrefix, publicRoutes } from 
 
 const {auth} = NextAuth(authConfig)
 
-export default auth(async (req, ctx) => {
+export default auth(async (req, ctx) : Promise<any | null> => {
     const {nextUrl} = req
     const isLoggedIn = !!req.auth
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)

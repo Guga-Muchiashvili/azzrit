@@ -1,16 +1,17 @@
-import ChangePasswordComponent from '@/components/changePasswordComponent/changePasswordComponent'
-import ResetPasswordComponent from '@/components/resetPasswordComponent/ResetPasswordComponent'
-import Link from 'next/link'
-import React from 'react'
-import schema from './schema'
+import React, { Suspense } from 'react';
+import schema from './schema';
+import ResetPasswordComponent from '@/components/resetPasswordComponent/ResetPasswordComponent'; // Adjusted naming convention
+import ChangePasswordComponent from '@/app/components/changePasswordComponent/changePasswordComponent';
 
-const page = () => {
+const ResetPasswordPage = () => {
+
   return (
     <div className='w-full h-screen bg-gray-800 flex justify-center items-center px-4'>
-      <Link href={'/signIn'} className='text-white font-poppins absolute top-4 left-4'>Go back</Link>
-        <ChangePasswordComponent schema={schema}/>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ChangePasswordComponent schema={schema} />
+      </Suspense>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default ResetPasswordPage;
