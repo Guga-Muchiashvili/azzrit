@@ -23,7 +23,7 @@ import ButtonInputElement from "@/app/elements/button/buttonInput.Element";
 import { IFormComponentProps } from "./formComponentTypes";
 import GoogleElementButton from "@/app/elements/google/googleElementButton";
 
-const FormComponent = ({ schema }: IFormComponentProps) => {
+const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
   const [url, setUrl] = useState<string | undefined>("");
   const navigate = useRouter();
 
@@ -93,7 +93,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
 
   return (
     <form
-      className="w-full md:w-2/3 lg:w-full h-2/3 bg-white rounded-md px-7 flex flex-col items-center justify-start py-14"
+      className={`${onLanding ? 'w-full' : "w-full md:w-2/3 lg:w-full"} h-2/3 bg-white rounded-md px-7 flex flex-col items-center justify-start py-14`}
       onSubmit={handleSubmit(onSubmit)}
     >
       <motion.h1
@@ -102,7 +102,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
         transition={{ duration: 1.5 }}
         className="font-semibold text-oswalid text-3xl text-black"
       >
-        {url === "signIn" ? "Sign In" : "Sign Up"}
+        {url === "signIn" ? "Sign In" : url == 'signUp' ? 'Sign Up' : "Sign In"}
       </motion.h1>
       {url === "signUp" ? (
         <>
@@ -211,7 +211,7 @@ const FormComponent = ({ schema }: IFormComponentProps) => {
            animate={{ opacity: 1, }}
            transition={{ duration: 1, delay: 0.3, ease: "easeIn" }}
           className="w-full flex items-start mt-5">
-          <Link className="text-sm font-semibold underline" href={'/reset'}>Forgot Password?</Link>
+          <Link className="text-sm font-semibold underline text-gray-600" href={'/reset'}>Forgot Password?</Link>
           </motion.div>
         </>
       ) : (

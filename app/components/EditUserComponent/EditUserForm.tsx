@@ -19,8 +19,10 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
   const { data: session, update: updateSession } = useSession();
   const [file, setFile] = useState<File | undefined>();
   const [imageUrl, setImageUrl] = useState<string | undefined>();
-  const fileInputRef = useRef(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const navigate = useRouter()
+
+  console.log(file)
 
   const {
     handleSubmit,
@@ -39,7 +41,7 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
       name: val.name,
     };
 
-    console.log(data)
+    console.log( session?.user.image)
 
     const res = await updateUser(data);
 
@@ -52,6 +54,7 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
 
     console.log('done')
     navigate.push('/landing')
+    window.location.reload()
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,9 +88,9 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
   };
 
   useEffect(() => {
-    setImageUrl(defaultValues.image as string)
+    setImageUrl(session?.user.image as string)
     reset(session?.user);
-  }, [defaultValues, reset]);
+  }, [reset]);
 
 
   return (
@@ -119,10 +122,9 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
           ) : (
             <Image
               src={
-                defaultValues.image == noUserImage ? noUserImage :
-                defaultValues.image?.includes("http")
-                  ? defaultValues.image
-                  : `/uploads/${defaultValues.image}`
+                session?.user.image == null ? noUserImage :
+                session?.user.image ?
+                   `/uploads/${session?.user.image}` : ""
               }
               width={120}
               height={120}

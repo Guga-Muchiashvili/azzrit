@@ -68,7 +68,7 @@ const Usernav = () => {
             ) : (
               <div>
                 <p className='absolute top-3 cursor-pointer right-3 text-black' onClick={() => setShowModal(false)}>X</p>
-                <FormComponent schema={schema}/>
+                <FormComponent onLanding={true} schema={schema}/>
               </div>
             )}
           </motion.div>

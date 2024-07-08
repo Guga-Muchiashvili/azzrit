@@ -37,9 +37,6 @@ const ImagePickerElement = ({control, id} : any) => {
                 type='file'
                 name={name}
                 inputRef={ref}
-                onChange={(e) => {
-                  console.log(e)
-                }}
                 onBlur={onBlur}
                 onChange={(event)=> {
                     // @ts-ignore

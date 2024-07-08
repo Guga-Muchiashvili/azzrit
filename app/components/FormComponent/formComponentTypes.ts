@@ -3,5 +3,6 @@ import ISignUp from "@/app/signUp/SignUptype";
 import { ObjectSchema } from "yup";
 
 export interface IFormComponentProps {
-    schema : ObjectSchema<ISignIn | ISignUp>
+    schema : ObjectSchema<ISignIn | ISignUp>,
+    onLanding?: boolean
 }
