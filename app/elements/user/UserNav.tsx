@@ -39,7 +39,7 @@ const Usernav = () => {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: "easeIn" }} className='absolute z-20 top-5 right-8  font-poppins'>
       {typeof session?.user.image == 'string' ? (
           <Image
-          src={`${session?.user.image == noUserImage ? noUserImage : session.user.image.includes('http') ? session.user.image : `/uploads/${session.user.image}` }`}
+          src={`${session?.user.image == noUserImage || !session?.user.image  ? noUserImage : session.user.image.includes('http') ? session.user.image : `/uploads/${session.user.image}` }`}
           className='w-12 h-12 rounded-full cursor-pointer'
           onClick={handleInteraction }
           alt='pfp'

@@ -14,6 +14,7 @@ import TextInputElement from "@/app/elements/textInput/textInput.Element";
 import IEditUser from "@/app/(protected)/editprofile/types";
 import { useRouter } from "next/navigation";
 import { signOutUser } from "@/actions/signOut/signOutUser";
+import { getImage } from "@/actions/getImage/fetchImage";
 
 const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
   const { data: session, update: updateSession } = useSession();
@@ -22,7 +23,9 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const navigate = useRouter()
 
-  console.log(file)
+  console.log('key', process.env.RESEND_API_KEY)
+
+  console.log(imageUrl)
 
   const {
     handleSubmit,
@@ -35,14 +38,14 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
   });
 
   const onSubmit = async (val: IEditUser) => {
+    const ml = await getImage()
+    const filtered = ml.resources.filter((item : any) =>{ if(item.secure_url == imageUrl) return item})
+
     const data: IEditUser = {
       email: val.email,
-      image: imageUrl === noUserImage ? null : imageUrl,
+      image: imageUrl === noUserImage ? null : filtered[0].secure_url,
       name: val.name,
     };
-
-    console.log( session?.user.image)
-
     const res = await updateUser(data);
 
     if (res.success) {
@@ -65,17 +68,17 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
         setFile(e.target.files[0]);
       }
 
-      const response = await fetch("/api/imageupload", {
-        method: "POST",
-        body: formData,
-      });
+      formData.append('upload_preset', 'uploads')
 
-      if (!response.ok) {
-        throw new Error("File upload failed");
-      }
+      const data = await fetch('https://api.cloudinary.com/v1_1/dqsgmvnye/image/upload', {
+        method : "POST",
+        body : formData
+      }).then((res) => {
+       return res.json()
+      })
 
-      const result = await response.json();
-      setImageUrl(result.path);
+      setImageUrl(data.secure_url)
+
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -113,7 +116,7 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
         >
           {file ? (
             <Image
-              src={URL.createObjectURL(file)}
+              src={typeof file == 'string' ? file :  URL.createObjectURL(file)}
               width={120}
               height={120}
               alt="pfp"
