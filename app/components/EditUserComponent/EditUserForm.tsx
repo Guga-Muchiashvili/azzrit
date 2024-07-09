@@ -39,7 +39,8 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
 
   const onSubmit = async (val: IEditUser) => {
     const ml = await getImage()
-    const filtered = ml.resources.filter((item : any) =>{ if(item.secure_url == imageUrl) return item})
+    console.log(ml)
+    const filtered = ml.resources?.filter((item : any) =>{ if(item.secure_url == imageUrl) return item})
 
     const data: IEditUser = {
       email: val.email,
