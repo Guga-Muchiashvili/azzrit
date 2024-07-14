@@ -23,9 +23,6 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const navigate = useRouter()
 
-  console.log('key', process.env.RESEND_API_KEY)
-
-  console.log(imageUrl)
 
   const {
     handleSubmit,
@@ -39,12 +36,11 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
 
   const onSubmit = async (val: IEditUser) => {
     const ml = await getImage()
-    console.log(ml)
     const filtered = ml.resources?.filter((item : any) =>{ if(item.secure_url == imageUrl) return item})
 
     const data: IEditUser = {
       email: val.email,
-      image: imageUrl === noUserImage ? null : filtered[0].secure_url,
+      image: imageUrl === noUserImage ? null : filtered[0]?.secure_url,
       name: val.name,
     };
     const res = await updateUser(data);
@@ -55,8 +51,6 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
     } else {
       return toast.error("Something went wrong");
     }
-
-    console.log('done')
     navigate.push('/landing')
     window.location.reload()
   };

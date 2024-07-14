@@ -48,7 +48,6 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
           if (res?.error) {
             toast.error(res?.error);
           } else {
-            console.log(res);
             if (res?.succes) {
               toast.success("Email Sent");
               return setTimeout(() => {
@@ -232,7 +231,7 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeIn" }}
-          className="mt-5 w-full"
+          className="mt-5 w-full flex justify-center"
         >
           {url == "landing" || url == "signIn" ? (
             <button className="w-full h-12 text-blue-500 hover:bg-blue-300 hover:text-white hover:border-none duration-200 ease-in rounded-lg font-normal border-[1px] border-blue-500 ">
