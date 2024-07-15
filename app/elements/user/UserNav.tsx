@@ -36,7 +36,7 @@ const Usernav = () => {
   }
   console.log(session?.user.image)
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: "easeIn" }} className='absolute z-20 top-5 right-8  font-poppins'>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: "easeIn" }} className='fixed z-20 top-5 right-8  font-poppins'>
       {typeof session?.user.image == 'string' ? (
           <Image
           src={`${session?.user.image == noUserImage || !session?.user.image  ? noUserImage : session.user.image.includes('http') ? session.user.image : `/uploads/${session.user.image}` }`}

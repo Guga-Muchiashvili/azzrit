@@ -5,8 +5,8 @@ import FilterCardElement from '../../elements/filterCardElement/FilterCardElemen
 const FilterTableComponent = () => {
   return (
     <div className='text-white w-full md:w-1/2 h-20 md:gap-5 mt-6 text-[9px] md:text-sm gap-2 py-3 px-1 flex justify-center rounded-full'>
-        {filterTableLabels.map((item) => (
-            <FilterCardElement label={item} key={item} />
+        {filterTableLabels.map((item, i) => (
+            <FilterCardElement label={item} key={item} index={i} />
         ))}
     </div>
   )
