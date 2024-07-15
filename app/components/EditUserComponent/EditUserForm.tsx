@@ -52,7 +52,6 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
       return toast.error("Something went wrong");
     }
     navigate.push('/landing')
-    window.location.reload()
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

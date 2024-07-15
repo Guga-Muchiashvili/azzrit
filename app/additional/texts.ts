@@ -35,3 +35,5 @@ export const rules = `თამაშში მონაწილეობას
 export const landingTexts = {'play' : "/",  'Rating' : 'rating', 'Registration': "signUp"}
 
 export const noUserImage = noUserPhoto.src
+
+export const filterTableLabels = ['Create Table', 'Watch', 'Ranking', 'Random']
