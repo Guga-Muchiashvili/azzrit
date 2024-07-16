@@ -15,8 +15,6 @@ const TextInputElement = ({name, placeholder} : {name : string, placeholder : st
           value={field.value || ''}
           placeholder={placeholder}
           type={'text'}
-        //   error={!!fieldState.error}
-        //   helperText={fieldState.error ? fieldState.error.message : null}
         />
       )}
     />

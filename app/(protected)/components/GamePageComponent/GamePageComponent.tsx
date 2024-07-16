@@ -6,7 +6,7 @@ import FilterTableComponent from '../FilterComponent/FilterTableComponent'
 import TableComponent from '../TableComponent/TableComponent'
 import { filterTableLabels } from '@/app/additional/texts'
 import { useTypeContext } from '../../tableTypeContext/TypeContext'
-import CreateTableModal from '../CreateTableModal/CreateTableComponent'
+import CreateTableModal from '../TableModalComponent/TableModalComponent'
 
 const GamePageComponent = () => {
     
