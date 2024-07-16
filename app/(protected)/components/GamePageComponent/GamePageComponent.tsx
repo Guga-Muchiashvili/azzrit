@@ -3,10 +3,10 @@ import Usernav from '@/app/elements/user/UserNav'
 import Link from 'next/link'
 import React from 'react'
 import FilterTableComponent from '../FilterComponent/FilterTableComponent'
-import TableComponent from '../TableComponent/TableComponent'
 import { filterTableLabels } from '@/app/additional/texts'
 import { useTypeContext } from '../../tableTypeContext/TypeContext'
 import CreateTableModal from '../TableModalComponent/TableModalComponent'
+import TableComponent from '../TableComponent/TableComponent'
 
 const GamePageComponent = () => {
     
