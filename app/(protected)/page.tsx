@@ -7,21 +7,17 @@ import Usernav from "../elements/user/UserNav";
 import Link from "next/link";
 import FilterTableComponent from "./components/FilterComponent/FilterTableComponent";
 import { filterTableLabels } from "../additional/texts";
-import TableComponent from "./components/tableComponent/TableComponent";
+import TableComponent from "./components/TableComponent/TableComponent";
+import {motion} from 'framer-motion'
+import { TypeProvider, useTypeContext } from "./tableTypeContext/TypeContext";
+import GamePageComponent from "./components/GamePageComponent/GamePageComponent";
 
 
 export default async function Home() {
-  const session = await auth()
   return (
-    <div className="w-full min-h-screen flex flex-col items-center py-9" id="MainPage">
-      <Link href={'/landing'} className="text-white absolute top-5 left-5">Go Back</Link>
-      <Usernav/>
-      <FilterTableComponent/>
-      <div className="w-full min-h-screen flex flex-wrap gap-12 relative px-10 py-28 items-center justify-center">
-        {filterTableLabels.map((item, i) => (
-          <TableComponent index={i} item={item} key={item}/>
-        ))}
-      </div>
-    </div>
+    <TypeProvider>
+      <GamePageComponent/>
+    </TypeProvider>
+
   )
 }

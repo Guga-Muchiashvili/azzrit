@@ -21,20 +21,16 @@ import IEditUser from '@/app/(protected)/editprofile/types';
 const Usernav = () => {
   const { data: session, status } = useSession();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const device = useDevice();
 
   const handleInteraction = () => {
     setShowModal(!showModal);
   };
-
-  console.log(session)
 
   const defaultValues : IEditUser = {
     email : session?.user.email,
     image : session?.user.image ? session.user.image : noUserImage,
     name : session?.user.name,
   }
-  console.log(session?.user.image)
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: "easeIn" }} className='fixed z-20 top-5 right-8  font-poppins'>
       {typeof session?.user.image == 'string' ? (

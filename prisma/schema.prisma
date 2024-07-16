@@ -26,6 +26,12 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+model Table {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  CreatorId String @map("user_id") @db.ObjectId
+  Users     User[]
+}
+
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
@@ -34,6 +40,8 @@ model User {
   image         String?
   password      String?
   accounts      Account[]
+  table         Table     @relation(fields: [tableId], references: [id])
+  tableId       String    @db.ObjectId
 }
 
 model VerificationToken {
@@ -52,4 +60,8 @@ model PasswordResetToken {
   expires DateTime
 
   @@unique([email, token])
+}
+
+model TableRequestModel {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 }
