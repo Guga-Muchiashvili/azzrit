@@ -2,7 +2,7 @@
 "use client"
 import React from 'react'
 import {motion} from 'framer-motion'
-import TableFormComponent from '../CreateTableForm/T/TableForm'
+import TableFormComponent from '../CreateTableForm/TableFormComponent/TableForm'
 
 
 const CreateTableModal = () => {

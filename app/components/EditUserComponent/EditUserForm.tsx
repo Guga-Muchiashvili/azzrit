@@ -16,10 +16,11 @@ import { useRouter } from "next/navigation";
 import { signOutUser } from "@/actions/signOut/signOutUser";
 import { getImage } from "@/actions/getImage/fetchImage";
 
-const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
+const EditUserForm = ({ schema, onLanding, modalToggle }: IEditUserProps) => {
   const { data: session, update: updateSession } = useSession();
   const [file, setFile] = useState<File | undefined>();
   const [imageUrl, setImageUrl] = useState<string | undefined>();
+  const [imageLoading, setimageLoading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const navigate = useRouter()
 
@@ -51,11 +52,13 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
     } else {
       return toast.error("Something went wrong");
     }
-    navigate.push('/landing')
+    modalToggle()
   };
 
+  console.log(imageLoading)
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
+      setimageLoading(true)
       const formData = new FormData();
       if (e.target.files && e.target.files.length > 0) {
         formData.append("file", e.target.files[0]);
@@ -71,7 +74,12 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
        return res.json()
       })
 
-      setImageUrl(data.secure_url)
+      if(data.secure_url){
+        setTimeout(() => {
+          setimageLoading(false)
+        }, 3000)
+        setImageUrl(data.secure_url)
+      }
 
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -166,11 +174,15 @@ const EditUserForm = ({ schema, onLanding }: IEditUserProps) => {
         transition={{ duration: 1.2, ease: "easeIn" }}
         className="mt-3 w-full"
       >
-         <button className="w-full h-12 text-blue-500 hover:bg-blue-300 hover:text-white hover:border-none duration-200 ease-in rounded-lg font-normal border-[1px] border-blue-500 ">Save</button>
-          <div className="absolute bottom-5 left-0 px-6 w-full " onClick={async() => {
-            signOutUser()
-            }}>
-         <button className="w-full h-12 text-red-500 hover:bg-red-300 hover:text-white hover:border-none duration-200 ease-in rounded-lg font-normal border-[1px] border-red-500 ">Sign Out</button>
+         <button disabled={imageLoading} className={`w-full h-12 text-blue-500 ${imageLoading ?  ` cursor-wait` : "hover:bg-blue-300 hover:text-white hover:border-none"} duration-200 ease-in rounded-lg font-normal border-[1px] border-blue-500 `}>Save</button>
+         <div className="absolute bottom-5 left-0 px-6 w-full" onClick={async () => {
+            if (!imageLoading) {
+              await signOutUser();
+              navigate.push('signIn');
+              window.location.reload();
+            }
+          }}>
+         <button className={`w-full h-12 text-red-500 hover:bg-red-300 hover:text-white hover:border-none duration-200 ease-in rounded-lg font-normal border-[1px] border-red-500`}>Sign Out</button>
         </div>
       </motion.div>
       

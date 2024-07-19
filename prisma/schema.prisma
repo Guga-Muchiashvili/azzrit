@@ -27,21 +27,42 @@ model Account {
 }
 
 model Table {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  CreatorId String @map("user_id") @db.ObjectId
-  Users     User[]
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  creatorId      String         @map("creator_id") @db.ObjectId
+  tableType      String
+  gameMode       String
+  creator        User           @relation("TableCreator", fields: [creatorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  waitingPlayers TableRequest[] @relation("WaitingRequests")
+  players        User[]         @relation("TablePlayers")
+
+  @@index([creatorId])
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?   @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   password      String?
   accounts      Account[]
-  table         Table     @relation(fields: [tableId], references: [id])
-  tableId       String    @db.ObjectId
+  table         Table?         @relation("TablePlayers", fields: [tableId], references: [id])
+  tableId       String?        @db.ObjectId
+  createdTables Table[]        @relation("TableCreator")
+  requests      TableRequest[]
+
+  @@index([tableId])
+}
+
+model TableRequest {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  tableId String @db.ObjectId
+  userId  String @db.ObjectId
+  status  String
+  table   Table  @relation("WaitingRequests", fields: [tableId], references: [id])
+  user    User   @relation(fields: [userId], references: [id])
+
+  @@unique([tableId, userId])
 }
 
 model VerificationToken {
@@ -60,8 +81,4 @@ model PasswordResetToken {
   expires DateTime
 
   @@unique([email, token])
-}
-
-model TableRequestModel {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
 }

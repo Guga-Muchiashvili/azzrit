@@ -31,3 +31,18 @@ export const getUserById = async(id : string | undefined) => {
     }
    
 }
+
+
+export const getTableByCreator = async(id : string | undefined) => {
+    try {
+        const existingTable = await db.table.findUnique({
+            where : {
+                creatorId : id
+            }
+        })
+        if(existingTable) return existingTable
+        return false
+    } catch (error) {
+        
+    }
+}

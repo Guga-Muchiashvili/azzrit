@@ -59,7 +59,7 @@ const Usernav = () => {
             {session ? (
               <div>
                 <p className='absolute top-3 right-3 cursor-pointer text-black' onClick={() => setShowModal(false)}>X</p>
-                <EditUserForm schema={edischema} onLanding={true}/>
+                <EditUserForm modalToggle={handleInteraction} schema={edischema} onLanding={true}/>
               </div>
             ) : (
               <div>

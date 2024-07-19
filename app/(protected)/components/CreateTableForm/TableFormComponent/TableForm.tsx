@@ -8,6 +8,7 @@ import { useTypeContext } from "@/app/(protected)/tableTypeContext/TypeContext";
 import TextInputElement from "@/app/(protected)/elements/textInputElement/TextInputElement";
 import RadioInputElement from "@/app/(protected)/elements/checkBoxElement/CheckBoxElement";
 import { useSession } from "next-auth/react";
+import { ITableForm } from "./tableFormType";
 
 const TableFormComponent = () => {
 
@@ -20,7 +21,7 @@ const TableFormComponent = () => {
     classic: '',
   };
 
-  const method = useForm({
+  const method = useForm<ITableForm>({
     resolver: yupResolver(schema),
     defaultValues
   });
