@@ -10,7 +10,13 @@ export const CreateTable = async (data: ITable) => {
     
   
     if (anotherTable) return { error: "You Have another table created" };
+
+    const table = await db.table.create({
+      data
+    })
   
+
+    return table
     // const updatedUser = await db.user.update({
     //   where: {
     //     email: data.email as string,
