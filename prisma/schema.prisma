@@ -27,11 +27,13 @@ model Account {
 }
 
 model Table {
+  title          String
   id             String         @id @default(auto()) @map("_id") @db.ObjectId
   creatorId      String         @map("creator_id") @db.ObjectId
   tableType      String
   gameMode       String
-  creator        User           @relation("TableCreator", fields: [creatorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  playerCount    Int
+  gameStarted    Boolean
   waitingPlayers TableRequest[] @relation("WaitingRequests")
   players        User[]         @relation("TablePlayers")
 
@@ -48,7 +50,6 @@ model User {
   accounts      Account[]
   table         Table?         @relation("TablePlayers", fields: [tableId], references: [id])
   tableId       String?        @db.ObjectId
-  createdTables Table[]        @relation("TableCreator")
   requests      TableRequest[]
 
   @@index([tableId])

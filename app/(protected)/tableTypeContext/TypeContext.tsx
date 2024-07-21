@@ -16,6 +16,7 @@ const TypeContext = createContext<TypeContextProps>({
 
 export const TypeProvider = ({ children }: { children: ReactNode }) => {
   const [type, setType] = useState<Type >(null);
+  const [modal, setmodal] = useState(false)
 
   const defineType = (newType: Type ) => {
     if (types.includes(newType as string) || newType == null) {

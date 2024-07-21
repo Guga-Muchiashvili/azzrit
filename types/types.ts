@@ -6,3 +6,4 @@ export interface IUser {
     image: string | null;
     password: string | Buffer;
 }
+

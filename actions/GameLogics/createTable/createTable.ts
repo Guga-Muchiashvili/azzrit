@@ -1,33 +1,49 @@
 'use server'
 import { getTableByCreator } from "@/actions/fetchData/dataRequests";
-import { ITable, ITableForm } from "@/app/(protected)/components/CreateTableForm/TableFormComponent/tableFormType";
-import IEditUser from "@/app/(protected)/editprofile/types"
-import { db } from "@/lib/db"
+import { ITableSend } from "@/app/(protected)/components/CreateTableForm/TableFormComponent/tableFormType";
+import { db } from "@/lib/db";
 
-export const CreateTable = async (data: ITable) => {
+export const CreateTable = async (data: ITableSend) => {
+  // Check if the creator already has a table
+  const existingTable = await getTableByCreator(data.creatorId);
 
-    const anotherTable = await getTableByCreator(data.creatorId);
-    
+  console.log(existingTable)
   
-    if (anotherTable) return { error: "You Have another table created" };
+  if (existingTable == true) {
+    return { error: "You already have another table created" };
+  }
 
+
+  console.log('here')
+  try {
     const table = await db.table.create({
-      data
-    })
-  
+      data: {
+        title: data.title,
+        gameMode: data.gameMode,
+        tableType: data.tableType,
+        players: {
+          connect: data.players.map(playerId => ({ id: playerId })),
+        },
+        waitingPlayers: {
+          connect: data.waitingPlayers.map(requestId => ({ id: requestId })),
+        },
+        creatorId : data.creatorId,
+        playerCount : data.playerCount,
+        gameStarted : data.gameStared
+      },
+    });
 
-    return table
-    // const updatedUser = await db.user.update({
-    //   where: {
-    //     email: data.email as string,
-    //   },
-    //   data: {
-    //     image: data.image,
-    //     name: data.name,
-    //     email : data.email
-    //   },
-    // });
-  
-    // console.log('daje aqac var')
-    // return { success: "user updated", user: updatedUser };
-  };
+    const user = await db.user.update({
+      where: { id: data.creatorId },
+      data: {
+        tableId : table.id
+      },
+    });
+
+    console.log(user);
+    return { success: "Table created successfully" };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to create table" };
+  }
+};

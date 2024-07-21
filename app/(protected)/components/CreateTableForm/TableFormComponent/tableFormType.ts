@@ -6,21 +6,33 @@ export interface ITableForm {
     classic : any
 }
 
-export type ITable = {
-    id: string;
-    creatorId: string;
-    tableType: string; // 'public' or 'private'
-    gameMode: string;  // 'classic' or 'sport'
-    creator: IUser;     // Relation to User model
+export type ITableSend = {
+    title : string
+    creatorId: string ;
+    tableType: string; 
+    gameMode: string;  
     waitingPlayers: TableRequest[]; 
-    players: IUser[];   
+    players: IUser[];  
+    gameStared : boolean,
+    playerCount : number 
   };
+
+  export interface ITable {
+    creator : IUser,
+    creatorId : string,
+    gameMode : string,
+    id : string,
+    tableType : string,
+    title : string,
+    playerCount : number,
+    gameStarted : boolean
+  }
 
   export type TableRequest = {
     id: string;
     tableId: string;
     userId: string;
     status: string; 
-    table: ITable;  
+    table: ITableSend;  
     user: IUser;     
   };

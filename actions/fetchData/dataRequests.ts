@@ -16,6 +16,7 @@ export const getUserByEmail = async(email : string) => {
    
 }
 
+
 export const getUserById = async(id : string | undefined) => {
     try {
         const existingUser = await db.user.findUnique({
@@ -32,17 +33,36 @@ export const getUserById = async(id : string | undefined) => {
    
 }
 
+export const getEveryUser = async() => {
+    try {
+        const Tables = await db.user.findMany()
+        return Tables
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const getTableByCreator = async(id : string | undefined) => {
+    console.log(id)
     try {
-        const existingTable = await db.table.findUnique({
+        const existingTable = await db.table.findFirst({
             where : {
                 creatorId : id
             }
         })
-        if(existingTable) return existingTable
+
+        if(existingTable) return true
         return false
     } catch (error) {
         
+    }
+}
+
+export const getEveryTable = async() => {
+    try {
+        const Tables = await db.table.findMany()
+        return Tables
+    } catch (error) {
+        console.log(error)
     }
 }
