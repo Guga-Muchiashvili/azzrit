@@ -18,7 +18,7 @@ const generateId = () => `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 const TableFormComponent = () => {
   const session = useSession();
   const [error, setError] = useState('')
-  const { defineType, type } = useTypeContext();
+  const { defineType, type, fetchData } = useTypeContext();
 
   const defaultValues = {
     title: `${session.data?.user.name}s Table`,
@@ -32,15 +32,16 @@ const TableFormComponent = () => {
   });
 
   const submit = async (e: ITableForm) => {
+    console.log(e)
     if (session.data?.user) {
       const data: ITableSend = {
         gameStared : false,
         playerCount : 0,
         title: e.title,
         creatorId: session.data?.user.id as string,
-        gameMode: e.classic ? 'classic' : "sport",
+        gameMode: e.classic == 'true' ? 'classic' : "sport",
         players: [],
-        tableType: e.private ? "private" : 'public',
+        tableType: e.private == 'true' ? "private" : 'public',
         waitingPlayers: [],
       };
 
@@ -48,6 +49,7 @@ const TableFormComponent = () => {
 
       if(res.error) return setError(res.error)
       defineType(null)
+      fetchData()
     }
   };
 

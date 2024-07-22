@@ -5,5 +5,5 @@ import { ObjectSchema } from "yup";
 export interface IEditUserProps {
     schema : ObjectSchema<IEditUser>,
     onLanding : boolean,
-    modalToggle : () => void
+    modalToggle?: () => void
 }

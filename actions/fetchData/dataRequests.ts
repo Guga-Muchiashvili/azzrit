@@ -58,6 +58,21 @@ export const getTableByCreator = async(id : string | undefined) => {
     }
 }
 
+export const getTableById = async(id : string | undefined) => {
+    try {
+        const existingTable = await db.table.findFirst({
+            where : {
+                id : id
+            }
+        })
+
+        if(existingTable) return true
+        return false
+    } catch (error) {
+        
+    }
+}
+
 export const getEveryTable = async() => {
     try {
         const Tables = await db.table.findMany()

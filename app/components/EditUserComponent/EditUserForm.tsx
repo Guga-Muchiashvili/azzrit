@@ -52,7 +52,8 @@ const EditUserForm = ({ schema, onLanding, modalToggle }: IEditUserProps) => {
     } else {
       return toast.error("Something went wrong");
     }
-    modalToggle()
+
+    modalToggle &&  modalToggle()
   };
 
   console.log(imageLoading)

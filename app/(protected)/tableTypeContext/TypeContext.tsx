@@ -1,24 +1,60 @@
 'use client'
+import { getEveryTable, getEveryUser } from '@/actions/fetchData/dataRequests';
 import { filterTableLabels } from '@/app/additional/texts';
 import { createContext, useContext, useState, ReactNode } from 'react';
+import { ITable } from '../components/CreateTableForm/TableFormComponent/tableFormType';
 
-const types = filterTableLabels
+const types = filterTableLabels;
 type Type = typeof types[number] | null;
 
 interface TypeContextProps {
   type: Type | null;
-  defineType: (newType: Type ) => void;
+  defineType: (newType: Type) => void;
+  Tables: ITable[] | null;
+  fetchData: () => void;
+  modal : boolean;
+  toggleModal : () => void
 }
+
 const TypeContext = createContext<TypeContextProps>({
   type: 'table',
   defineType: () => {},
+  Tables: null,
+  fetchData: () => {},
+  modal : false,
+  toggleModal : () => {}
 });
 
 export const TypeProvider = ({ children }: { children: ReactNode }) => {
-  const [type, setType] = useState<Type >(null);
-  const [modal, setmodal] = useState(false)
+  const [type, setType] = useState<Type>(null);
+  const [Tables, setTables] = useState<ITable[] | null>(null);
+  const [modal, setShowModal] = useState(false)
 
-  const defineType = (newType: Type ) => {
+  const toggleModal = () => {
+    setShowModal(prev => !prev)
+  }
+
+  const fetchData = async () => {
+    try {
+      const tables = await getEveryTable()
+      const users = await getEveryUser()
+
+      const enrichedTableData = tables?.map(table => {
+        const creator = users?.find(user => user.id === table.creatorId)
+        return {
+          ...table,
+          creator: creator || null
+        }
+      })
+
+      setTables(enrichedTableData as any) 
+    } catch (error) {
+      console.error('Failed to fetch data:', error)
+    }
+  }
+
+
+  const defineType = (newType: Type) => {
     if (types.includes(newType as string) || newType == null) {
       setType(newType);
     } else {
@@ -27,11 +63,10 @@ export const TypeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <TypeContext.Provider value={{ type, defineType }}>
+    <TypeContext.Provider value={{ type, Tables, toggleModal, modal, defineType, fetchData }}>
       {children}
     </TypeContext.Provider>
   );
 };
-
 
 export const useTypeContext = () => useContext(TypeContext);
