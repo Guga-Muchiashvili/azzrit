@@ -20,9 +20,6 @@ export const newPassword = async(password : string, token : string | undefined) 
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    console.log('new password', hashedPassword)
-
-    console.log(existingUser)
     await db.user.update({
         where : {id : existingUser.id},
         data : {password : hashedPassword}

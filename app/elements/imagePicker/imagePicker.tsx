@@ -23,7 +23,6 @@ const ImagePickerElement = ({control, id} : any) => {
           control={control}
           name={id}
           render={({ field: {onChange, value, ref, name, onBlur} }) => {
-            console.log('value', value)
             return(
             <Button
               component="label"

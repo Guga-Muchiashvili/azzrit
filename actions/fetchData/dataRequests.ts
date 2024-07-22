@@ -24,7 +24,7 @@ export const getUserById = async(id : string | undefined) => {
                 id
             }
         })
-        console.log('existing user', existingUser)
+
 
         return existingUser
     } catch (error) {
@@ -43,7 +43,6 @@ export const getEveryUser = async() => {
 }
 
 export const getTableByCreator = async(id : string | undefined) => {
-    console.log(id)
     try {
         const existingTable = await db.table.findFirst({
             where : {

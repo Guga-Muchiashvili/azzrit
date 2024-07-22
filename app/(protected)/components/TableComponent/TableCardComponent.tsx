@@ -12,7 +12,7 @@ import noPfpImg from '../../../assets/no profile.jpg'
 import { deleteTable } from "@/actions/GameLogics/DeleteTable/deleteTable";
 import { useTypeContext } from "../../tableTypeContext/TypeContext";
 
-const TableComponent = ({item, index} : {item : ITable, index : number}) => {
+const TableCardElement = ({item, index} : {item : ITable, index : number}) => {
   const session = useSession();
   const { defineType, type, fetchData } = useTypeContext();
 
@@ -49,4 +49,4 @@ const TableComponent = ({item, index} : {item : ITable, index : number}) => {
   );
 };
 
-export default TableComponent;
+export default TableCardElement;

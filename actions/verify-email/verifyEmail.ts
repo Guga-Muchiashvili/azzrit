@@ -23,7 +23,6 @@ export const newVerification = async(token : string) => {
         error : "invalid email"
     }
 
-    console.log('exit', existingUser)
 
     await db.user.update({
         where : {id : existingUser.id},
@@ -33,7 +32,6 @@ export const newVerification = async(token : string) => {
         }
     })
 
-    console.log()
     await db.verificationToken.delete({
         where : {id : existingToken.id}
     })

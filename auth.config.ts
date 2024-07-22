@@ -36,8 +36,6 @@ export default {
         
                 const user = await getUserByEmail(credentials.email as string);
         
-                console.log('user', user);
-        
                 if (!user || !user.password || typeof user.password !== 'string') {
                     return null;
                 }

@@ -25,7 +25,6 @@ export const deleteTable = async (id: string, creatorId : string) => {
       },
     });
 
-    console.log(user);
     return { success: "Table created successfully" };
   } catch (error) {
     console.error(error);

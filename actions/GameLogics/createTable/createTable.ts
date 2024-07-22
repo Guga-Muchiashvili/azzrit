@@ -5,14 +5,11 @@ import { db } from "@/lib/db";
 
 export const CreateTable = async (data: ITableSend) => {
   const existingTable = await getTableByCreator(data.creatorId);
-
-  console.log(existingTable);
   
   if (existingTable) {
     return { error: "You already have another table created" };
   }
 
-  console.log('esaa data', data);
 
   try {
     const table = await db.table.create({
@@ -39,7 +36,6 @@ export const CreateTable = async (data: ITableSend) => {
       },
     });
 
-    console.log(user);
     return { success: "Table created successfully" };
   } catch (error) {
     console.error(error);

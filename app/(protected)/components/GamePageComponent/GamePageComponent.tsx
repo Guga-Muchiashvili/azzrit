@@ -6,10 +6,7 @@ import FilterTableComponent from '../FilterComponent/FilterTableComponent'
 import { filterTableLabels } from '@/app/additional/texts'
 import { useTypeContext } from '../../tableTypeContext/TypeContext'
 import CreateTableModal from '../TableModalComponent/TableModalComponent'
-import TableComponent from '../TableComponent/TableComponent'
-import { getEveryTable, getEveryUser } from '@/actions/fetchData/dataRequests'
-import { ITable } from '../CreateTableForm/TableFormComponent/tableFormType'
-
+import TableComponent from '../TableComponent/TableCardComponent'
 const GamePageComponent = () => {
   const { defineType, type, Tables, fetchData } = useTypeContext()
 

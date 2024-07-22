@@ -32,7 +32,6 @@ const TableFormComponent = () => {
   });
 
   const submit = async (e: ITableForm) => {
-    console.log(e)
     if (session.data?.user) {
       const data: ITableSend = {
         gameStared : false,

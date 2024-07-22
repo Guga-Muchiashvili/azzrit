@@ -56,7 +56,6 @@ const EditUserForm = ({ schema, onLanding, modalToggle }: IEditUserProps) => {
     modalToggle &&  modalToggle()
   };
 
-  console.log(imageLoading)
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       setimageLoading(true)
