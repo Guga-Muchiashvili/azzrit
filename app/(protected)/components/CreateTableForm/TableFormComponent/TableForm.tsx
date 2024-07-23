@@ -34,7 +34,7 @@ const TableFormComponent = () => {
   const submit = async (e: ITableForm) => {
     if (session.data?.user) {
       const data: ITableSend = {
-        gameStared : false,
+        gameStarted : false,
         playerCount : 0,
         title: e.title,
         creatorId: session.data?.user.id as string,
@@ -72,7 +72,7 @@ const TableFormComponent = () => {
         </div>
           {error && <div className="w-full h-11 bg-red-600 text-sm 0 rounded-xl text-white text-center font-bold flex items-center justify-center">{error}</div>
           }
-        <button className="w-full rounded-md mt-3 text-white font-bold tracking-widest h-10 bg-green-500 left-0" type="submit">Create</button>
+        <button className="w-full hover:scale-90 duration-500 rounded-md mt-3 text-white font-bold tracking-widest h-10 bg-green-500 left-0" type="submit">Create</button>
       </TableProvider>
     </div>
   );

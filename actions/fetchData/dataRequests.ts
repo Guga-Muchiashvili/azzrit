@@ -80,3 +80,26 @@ export const getEveryTable = async() => {
         console.log(error)
     }
 }
+
+export const isUserPlaying = async (id: string): Promise<boolean> => {
+    try {
+      console.log(id);
+  
+      const table = await db.table.findFirst({
+        where: {
+          players: {
+            contains: id,
+          },
+        },
+      });
+  
+      console.log('Table found:', table);
+  
+      return table !== null;
+    } catch (error) {
+      console.error("Error checking if user is playing:", error);
+      return false;
+    }
+  };
+  
+  

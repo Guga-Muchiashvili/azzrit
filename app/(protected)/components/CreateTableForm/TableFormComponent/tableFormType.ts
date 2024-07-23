@@ -13,8 +13,8 @@ export type ITableSend = {
     gameMode: string;  
     waitingPlayers: TableRequest[]; 
     players: IUser[];  
-    gameStared : boolean,
-    playerCount : number 
+    gameStarted : boolean,
+    playerCount : number ,
   };
 
   export interface ITable {

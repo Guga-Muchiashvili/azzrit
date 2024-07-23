@@ -6,6 +6,8 @@ import { db } from "@/lib/db";
 export const deleteTable = async (id: string, creatorId : string) => {
   const existingTable = await getTableById(id);
 
+  console.log(existingTable, id)
+
   
   if (!existingTable) {
     return { error: "No Table Found" };

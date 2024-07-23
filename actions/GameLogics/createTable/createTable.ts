@@ -4,12 +4,13 @@ import { ITableSend } from "@/app/(protected)/components/CreateTableForm/TableFo
 import { db } from "@/lib/db";
 
 export const CreateTable = async (data: ITableSend) => {
+
+
   const existingTable = await getTableByCreator(data.creatorId);
-  
+
   if (existingTable) {
     return { error: "You already have another table created" };
   }
-
 
   try {
     const table = await db.table.create({
@@ -17,28 +18,24 @@ export const CreateTable = async (data: ITableSend) => {
         title: data.title,
         gameMode: data.gameMode,
         tableType: data.tableType,
-        players: {
-          connect: data.players.map(player => ({ id: player.id, email: player.email })),
-        },
-        waitingPlayers: {
-          connect: data.waitingPlayers.map(player => ({ id: player.id, email: player.user.image })),
-        },
+        players: JSON.stringify([]), 
+        waitingPlayers: JSON.stringify([]), 
         creatorId: data.creatorId,
         playerCount: data.playerCount,
-        gameStarted: data.gameStared
+        gameStarted: false, 
       },
     });
 
-    const user = await db.user.update({
+    await db.user.update({
       where: { id: data.creatorId },
       data: {
-        tableId: table.id
+        tableId: table.id,
       },
     });
 
     return { success: "Table created successfully" };
   } catch (error) {
-    console.error(error);
+    console.error("Failed to create table:", error);
     return { error: "Failed to create table" };
   }
 };

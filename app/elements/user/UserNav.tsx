@@ -44,7 +44,7 @@ const Usernav = () => {
           />
       ) : (
         <IoMdPerson
-        className='text-5xl border-2 z-20 border-red-600 hover:bg-white duration-500 ease-in bg-black cursor-pointer rounded-full p-[5px]'
+        className='text-5xl border-2 z-20 border-red-600 hover:bg-red-600 duration-500 ease-in bg-black cursor-pointer rounded-full p-[5px]'
         onClick={handleInteraction}
       />
       )}

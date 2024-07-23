@@ -39,6 +39,7 @@ export const TypeProvider = ({ children }: { children: ReactNode }) => {
       const tables = await getEveryTable()
       const users = await getEveryUser()
 
+      console.log('users', users, tables, 'tables')
       const enrichedTableData = tables?.map(table => {
         const creator = users?.find(user => user.id === table.creatorId)
         return {
@@ -46,6 +47,8 @@ export const TypeProvider = ({ children }: { children: ReactNode }) => {
           creator: creator || null
         }
       })
+
+      console.log(enrichedTableData)
 
       setTables(enrichedTableData as any) 
     } catch (error) {

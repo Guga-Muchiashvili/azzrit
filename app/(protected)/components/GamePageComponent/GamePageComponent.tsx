@@ -22,7 +22,7 @@ const GamePageComponent = () => {
       <Link href={'/landing'} className="text-white absolute top-5 left-5">Go Back</Link>
       <Usernav />
       <FilterTableComponent />
-      <div className="w-full min-h-screen flex flex-wrap gap-12 relative px-10 py-28 items-center justify-center">
+      <div className="w-full min-h-screen flex flex-wrap gap-12 px-10 py-28 items-center justify-center">
         {Tables?.map((item, i : number) => (
           <TableComponent index={i} item={item} key={i} />
         ))}
