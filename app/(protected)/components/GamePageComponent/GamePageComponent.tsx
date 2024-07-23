@@ -7,11 +7,20 @@ import { filterTableLabels } from '@/app/additional/texts'
 import { useTypeContext } from '../../tableTypeContext/TypeContext'
 import CreateTableModal from '../TableModalComponent/TableModalComponent'
 import TableComponent from '../TableComponent/TableCardComponent'
+import { deleteUserTableId } from '@/actions/GameLogics/deletePlayerFromTable/deletePlayer'
+import { useSession } from 'next-auth/react'
 const GamePageComponent = () => {
   const { defineType, type, Tables, fetchData } = useTypeContext()
+  const session = useSession()
 
   useEffect(() => {
     fetchData()
+      const deleteTableId = async() => {
+        const res = await deleteUserTableId(session.data?.user.id as string)
+        console.log(res)
+      }
+      deleteTableId()
+
   },[])
 
   return (

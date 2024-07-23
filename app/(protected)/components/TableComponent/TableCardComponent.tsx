@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { ITable } from "../CreateTableForm/TableFormComponent/tableFormType";
@@ -14,6 +14,7 @@ import CreateModal from "../TableModalComponent/TableModalComponent";
 import { useRouter } from "next/navigation";
 import { appendPlayer } from "@/actions/GameLogics/appendPlayer/appendPlayer";
 import { flushSync } from "react-dom";
+import { deleteUserTableId } from "@/actions/GameLogics/deletePlayerFromTable/deletePlayer";
 
 const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
   const session = useSession();
@@ -29,21 +30,14 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
   
 
   const SendRequest = async() => {
-    if(item.creatorId == session.data?.user.id){
-      navigate.push(`/table/${item.creatorId}`)
-    }
-    else{
+
       const res = await appendPlayer(session.data?.user.id as string, item.id)
       console.log(res)
       if(res.tableId == item.id) return navigate.push(`/table/${item.creatorId}`)
-
-
       if(res.success)  return navigate.push(`/table/${item.creatorId}`)
       
-    }
   }
 
-  console.log(item)
 
   return (
     <>

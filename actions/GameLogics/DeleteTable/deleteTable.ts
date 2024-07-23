@@ -23,14 +23,12 @@ export const deleteTable = async (id: string, creatorId: string) => {
       )
     );
 
-    // Delete the table
     await db.table.delete({
       where: {
         id: id
       }
     });
 
-    // Remove the tableId from the creator
     await db.user.update({
       where: { id: creatorId },
       data: {
