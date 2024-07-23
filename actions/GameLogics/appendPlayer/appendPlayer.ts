@@ -23,7 +23,7 @@ export const appendPlayer = async (id: string, tableId: string) => {
     console.log('isPlaying', isPlayerAlreadyInThisTable)
     
 
-    if(isPlayerAlreadyInThisTable.length) return {status : 'Joined'}
+    if(isPlayerAlreadyInThisTable.length) return {status : 'Joined', tableId : isPlayerAlreadyInThisTable[0].id}
 
     const players = JSON.parse(table.players);
     players.push(id); 

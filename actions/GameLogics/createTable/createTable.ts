@@ -8,8 +8,16 @@ export const CreateTable = async (data: ITableSend) => {
 
   const existingTable = await getTableByCreator(data.creatorId);
 
-  if (existingTable) {
-    return { error: "You already have another table created" };
+  const isPlayerAlreadyInThisTable = await db.table.findMany({
+    where: {
+      players: {
+        contains: data.creatorId, 
+      },
+    },
+  });
+
+  if (existingTable || isPlayerAlreadyInThisTable ) {
+    return { error: "You Are in another Table" };
   }
 
   try {

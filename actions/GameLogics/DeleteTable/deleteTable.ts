@@ -3,33 +3,44 @@ import { getTableByCreator, getTableById } from "@/actions/fetchData/dataRequest
 import { ITableSend } from "@/app/(protected)/components/CreateTableForm/TableFormComponent/tableFormType";
 import { db } from "@/lib/db";
 
-export const deleteTable = async (id: string, creatorId : string) => {
+export const deleteTable = async (id: string, creatorId: string) => {
+  // Fetch the existing table
   const existingTable = await getTableById(id);
 
-  console.log(existingTable, id)
-
-  
   if (!existingTable) {
     return { error: "No Table Found" };
   }
 
   try {
-    const table = await db.table.delete({
-      where : {
-        id : id
+    const players = JSON.parse(existingTable.players || '[]') as string[];
+
+    await Promise.all(
+      players.map(playerId =>
+        db.user.update({
+          where: { id: playerId },
+          data: { tableId: null },
+        })
+      )
+    );
+
+    // Delete the table
+    await db.table.delete({
+      where: {
+        id: id
       }
     });
 
-    const user = await db.user.update({
+    // Remove the tableId from the creator
+    await db.user.update({
       where: { id: creatorId },
       data: {
-        tableId : undefined
+        tableId: null
       },
     });
 
-    return { success: "Table created successfully" };
+    return { success: "Table deleted successfully" };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to create table" };
+    return { error: "Failed to delete table" };
   }
 };

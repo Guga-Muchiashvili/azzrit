@@ -35,6 +35,11 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
     else{
       const res = await appendPlayer(session.data?.user.id as string, item.id)
       console.log(res)
+      if(res.tableId == item.id) return navigate.push(`/table/${item.creatorId}`)
+
+
+      if(res.success)  return navigate.push(`/table/${item.creatorId}`)
+      
     }
   }
 
@@ -49,7 +54,7 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
       transition={{ duration: 1, delay: 0.1 * index }}
       className="w-full overflow-hidden relative h-72 bg-black bg-opacity-65 md:w-[550px] rounded-3xl px-4"
     >
-      <div className="w-full h-1/3 flex items-start  py-8 gap-3 relative ">
+      <div className="w-full h-1/3 flex items-start  py-5 gap-3 relative ">
         <motion.div
           initial={{ opacity: 0, translateX: -30 }}
           animate={{ opacity: 1, translateX: 0 }}
@@ -64,7 +69,7 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
             alt="img"
             width={310}
             height={310}
-            className="w-20 h-20 rounded-full"
+            className="w-20 h-20 mb-2 rounded-full"
           ></Image>
         </motion.div>
         <div className="h-full gap-1 flex flex-col justify-start text-white py-1">
@@ -72,7 +77,7 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
             initial={{ opacity: 0, translateY: -20 }}
             animate={{ opacity: 1, translateY: 0 }}
             transition={{ duration: 1.5, delay: 0.3 }}
-            className="text-2xl font-bold"
+            className="text-2xl font-bold hidden md:block"
           >
             {item.title}
           </motion.h1>
@@ -80,6 +85,7 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
             initial={{ opacity: 0, translateY: -20 }}
             animate={{ opacity: 1, translateY: 0 }}
             transition={{ duration: 1.5, delay: 0.3 }}
+            className="hidden md:block"
           >
             {item.creator?.name}
           </motion.h2>

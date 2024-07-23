@@ -11,6 +11,8 @@ export default auth(async (req, ctx) : Promise<any | null> => {
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
     const isAuthRoute = AuthRoutes.includes(nextUrl.pathname)
 
+    console.log(req.auth)
+
 
     if (isApiAuthRoute) {
         return null

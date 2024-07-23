@@ -2,12 +2,12 @@
 import { useParams } from 'next/navigation'
 import React from 'react'
 
-const page = () => {
+const TablePage = () => {
     const {tableId} = useParams()
     console.log(tableId)
   return (
-    <div>page</div>
+    <div>TablePage</div>
   )
 }
 
-export default page
+export default TablePage

@@ -8,7 +8,8 @@ const TextInputElement = ({name, placeholder} : {name : string, placeholder : st
    <Controller
       control={control}
       name={name}
-      render={({ field, fieldState }) => (
+      render={({ field, fieldState : {error} }) => (
+        <>
         <input
         className='outline-none bg-transparent text-white placeholder:text-red-400 h-12 border-b-2 border-b-red-500  p-1'
           onChange={field.onChange}
@@ -16,6 +17,9 @@ const TextInputElement = ({name, placeholder} : {name : string, placeholder : st
           placeholder={placeholder}
           type={'text'}
         />
+        {error && <span className="text-red-500 text-sm mt-1">{error.message}</span>}
+        </>
+        
       )}
     />
   )

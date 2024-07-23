@@ -65,7 +65,7 @@ export const getTableById = async(id : string | undefined) => {
             }
         })
 
-        if(existingTable) return true
+        if(existingTable) return existingTable
         return false
     } catch (error) {
         

@@ -2,7 +2,7 @@
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-  title: yup.string().required("Title is required"),
+  title: yup.string().required("Title is required").min(5),
   private: yup
     .mixed()
     .nullable()
