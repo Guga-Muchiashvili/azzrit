@@ -1,10 +1,9 @@
 import { getTableById } from '@/actions/fetchData/dataRequests'
 import Usernav from '@/app/elements/user/UserNav'
 import { FaRunning } from "react-icons/fa";
-
 import React from 'react'
 import Link from 'next/link';
-import PlayerListComponent from '../../components/PlayerList/PlayerListComponent';
+import PlayerListComponent from '../../components/PlayerList/PlayerList';
 import { TypeProvider } from '../../tableTypeContext/TypeContext';
 
 const TablePage = async() => {

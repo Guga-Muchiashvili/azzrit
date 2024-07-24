@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import CretorControlComponent from "../creatorControlComponent/CretorControlComponent";
+import CretorControlComponent from "../creatorControlComponent/CretorControl";
 import { useParams } from "next/navigation";
 import { getTableById } from "@/actions/fetchData/dataRequests";
 import { ITable } from "../CreateTableForm/TableFormComponent/tableFormType";
