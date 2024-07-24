@@ -5,7 +5,7 @@ import Image from "next/image";
 import './styles.scss'
 import Usernav from "../elements/user/UserNav";
 import Link from "next/link";
-import FilterTableComponent from "./components/filterComponent/FilterTableComponent";
+import FilterTableComponent from "./components/filterComponent/FilterTable";
 import { filterTableLabels } from "../additional/texts";
 import TableComponent from "./components/tableComponent/TableCard";
 import {motion} from 'framer-motion'

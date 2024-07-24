@@ -2,13 +2,12 @@
 import Usernav from '@/app/elements/user/UserNav'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import FilterTableComponent from '@/inGameComponents/filterComponent/FilterTableComponent'
 import CreateModal from '../tableModalComponent/TableModal'
-import { filterTableLabels } from '@/app/additional/texts'
 import { deleteUserTableId } from '@/actions/GameLogics/deletePlayerFromTable/deletePlayer'
 import { useSession } from 'next-auth/react'
 import { useTypeContext } from '../../tableTypeContext/TypeContext'
 import TableCardElement from '../tableComponent/TableCard'
+import FilterTableComponent from '../filterComponent/FilterTable'
 const GamePageComponent = () => {
   const { defineType, type, Tables, fetchData } = useTypeContext()
   const session = useSession()
