@@ -10,7 +10,7 @@ import { filterTableLabels } from "../additional/texts";
 import TableComponent from "./components/tableComponent/TableCardComponent";
 import {motion} from 'framer-motion'
 import { TypeProvider, useTypeContext } from "./tableTypeContext/TypeContext";
-import GamePageComponent from "./components/gamePageComponent/GamePageComponent";
+import GamePageComponent from "./components/gamePageComponent/GamePaget";
 
 
 export default async function Home() {
