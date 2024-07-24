@@ -7,7 +7,7 @@ import Usernav from "../elements/user/UserNav";
 import Link from "next/link";
 import FilterTableComponent from "./components/filterComponent/FilterTableComponent";
 import { filterTableLabels } from "../additional/texts";
-import TableComponent from "./components/tableComponent/TableCardComponent";
+import TableComponent from "./components/tableComponent/TableCard";
 import {motion} from 'framer-motion'
 import { TypeProvider, useTypeContext } from "./tableTypeContext/TypeContext";
 import GamePageComponent from "./components/gamePageComponent/GamePaget";
