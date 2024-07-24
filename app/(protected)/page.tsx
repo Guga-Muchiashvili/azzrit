@@ -5,12 +5,12 @@ import Image from "next/image";
 import './styles.scss'
 import Usernav from "../elements/user/UserNav";
 import Link from "next/link";
-import FilterTableComponent from "./components/FilterComponent/FilterTableComponent";
+import FilterTableComponent from "./components/filterComponent/FilterTableComponent";
 import { filterTableLabels } from "../additional/texts";
-import TableComponent from "./components/TableComponent/TableCardComponent";
+import TableComponent from "./components/tableComponent/TableCardComponent";
 import {motion} from 'framer-motion'
 import { TypeProvider, useTypeContext } from "./tableTypeContext/TypeContext";
-import GamePageComponent from "./components/GamePageComponent/GamePageComponent";
+import GamePageComponent from "./components/gamePageComponent/GamePageComponent";
 
 
 export default async function Home() {

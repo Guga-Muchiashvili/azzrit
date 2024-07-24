@@ -52,8 +52,10 @@ export const getTableByCreator = async (id: string | undefined) => {
 };
 
 export const getTableById = async (id: string | undefined) => {
+
+  console.log(id)
   try {
-    const existingTable = await db.table.findFirst({
+    const existingTable = await db.table.findUnique({
       where: {
         id: id,
       },
@@ -75,7 +77,6 @@ export const getEveryTable = async () => {
 
 export const isUserPlaying = async (id: string): Promise<boolean> => {
   try {
-    console.log(id);
 
     const table = await db.table.findFirst({
       where: {

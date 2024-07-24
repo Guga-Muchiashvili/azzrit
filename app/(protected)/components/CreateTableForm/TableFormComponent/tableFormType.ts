@@ -25,7 +25,8 @@ export type ITableSend = {
     tableType : string,
     title : string,
     playerCount : number,
-    gameStarted : boolean
+    gameStarted : boolean,
+    players : String[]
   }
 
   export type TableRequest = {

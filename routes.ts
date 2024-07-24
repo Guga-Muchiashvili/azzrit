@@ -15,3 +15,4 @@ export const AuthRoutes = [
 
 export const DEFAULT_ROUTE_NAVIGATE = '/landing'
 export const apiAuthPrefix = '/api/auth'
+export const TableRoute = '/table/:tableId'
