@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react'
 import { useTypeContext } from '../../tableTypeContext/TypeContext'
 import TableCardElement from '../tableComponent/TableCard'
 import FilterTableComponent from '../filterComponent/FilterTable'
+import { Toaster } from 'sonner'
 const GamePageComponent = () => {
   const { defineType, type, Tables, fetchData } = useTypeContext()
   const session = useSession()
@@ -34,6 +35,7 @@ const GamePageComponent = () => {
         {Tables?.map((item, i : number) => (
           <TableCardElement index={i} item={item} key={i} />
         ))}
+        <Toaster />
       </div>
     </div>
   )

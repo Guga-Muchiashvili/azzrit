@@ -28,8 +28,6 @@ const PlayerListComponent = () => {
     getTable();
   }, [tableId, getTableUsers]);
   
-
-  console.log('table', table)
   
   return (
     <div className="w-full h-screen">

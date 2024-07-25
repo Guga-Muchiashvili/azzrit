@@ -30,7 +30,7 @@ export const sendRequest = async({id, itemId} : {id : string | undefined, itemId
 
     const isSame = JSON.parse(table?.waitingPlayers as string).map((item : IUser) => {
         console.log('dd', item, id)
-        if(item.id == id ) {
+        if(item?.id == id ) {
             return true
         }
         return false
@@ -39,8 +39,6 @@ export const sendRequest = async({id, itemId} : {id : string | undefined, itemId
         if(isSame.includes(true)) return {message : "Already Sent"}
 
     const waitingPlayers = [...JSON.parse(table?.waitingPlayers as string), user]
-
-    console.log(waitingPlayers, 'ssss')
 
     await db.table.update({
         where : {

@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { FaChevronCircleRight  } from "react-icons/fa";
+import { toast } from 'sonner';
 
 
 const CretorControlComponent = ({creatorId} : {creatorId: string | undefined}) => {
@@ -28,7 +29,13 @@ const CretorControlComponent = ({creatorId} : {creatorId: string | undefined}) =
 
     const acceptPlayer = async(id : string) => {
       const res = await confirmRequest({ id : id,  tableId : tableId as string })
-      console.log(res)
+      if(res.sucess == 'User Accepted'){
+        toast.success('Usser Accepted')
+      }
+      if(res.message == 'Already In'){
+        toast.error('User is already on Table')
+      }
+      
     }
 
   return (
@@ -63,7 +70,7 @@ const CretorControlComponent = ({creatorId} : {creatorId: string | undefined}) =
               <p>{item?.name}</p> 
               <p>{item?.email}</p>
             </div>
-            <div className='h-full w-7 absolute right-16 gap-2 py-1 flex text-white font-bold flex-col justify-center'>
+            <div className='h-full w-7 absolute right-16 gap-1 py-1 flex text-white font-bold flex-col justify-center'>
               <p className='h-1/2 bg-green-500 w-20 rounded-xl flex items-center justify-center cursor-pointer' onClick={() => acceptPlayer(item.id)}>Approve</p>
               <p className='h-1/2 bg-red-500 w-20 rounded-xl flex items-center justify-center cursor-pointer'>Reject</p>
             </div>

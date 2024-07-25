@@ -5,6 +5,7 @@ import React from 'react'
 import Link from 'next/link';
 import PlayerListComponent from '../../components/PlayerList/PlayerList';
 import { TypeProvider } from '../../tableTypeContext/TypeContext';
+import { Toaster } from 'sonner';
 
 const TablePage = async() => {
     // const session = useSession()
@@ -20,6 +21,7 @@ const TablePage = async() => {
       <Link href={'/'}>
       <FaRunning className='text-2xl text-red-600 absolute bottom-6 right-8 cursor-pointer hover:bg-white w-12 h-12 p-2 rounded-full duration-700'/>
       </Link>
+      <Toaster/>
     </div>
     </TypeProvider>
   )
