@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { appendPlayer } from "@/actions/GameLogics/appendPlayer/appendPlayer";
 import { flushSync } from "react-dom";
 import { deleteUserTableId } from "@/actions/GameLogics/deletePlayerFromTable/deletePlayer";
+import { sendRequest } from "@/actions/GameLogics/sendRequest/sendRequest";
 
 const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
   const session = useSession();
@@ -27,12 +28,22 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
     toggleModal();
   };
 
+
   const SendRequest = async () => {
-    const res = await appendPlayer(session.data?.user.id as string, item.id);
-    console.log(res);
-    if (res.tableId == item.id)
-      return navigate.push(`/table/${item.id}`);
-    if (res.success) return navigate.push(`/table/${item.id}`);
+
+    if(item.tableType == 'public' || item.creatorId === session.data?.user.id){
+      const res = await appendPlayer(session.data?.user.id as string, item.id);
+      if (res.tableId == item.id)
+        return navigate.push(`/table/${item.id}`);
+      if (res.success) return navigate.push(`/table/${item.id}`);
+    }
+    else{
+      console.log('aqa')
+      const res = await sendRequest({id : session.data?.user.id, itemId : item.id})
+      console.log(res)
+      if(res.sucess == 'Joined')  return navigate.push(`/table/${item.id}`);
+    }
+   
   };
 
  

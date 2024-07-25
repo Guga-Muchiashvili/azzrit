@@ -2,13 +2,16 @@
 import { db } from "@/lib/db";
 
 export const deleteUserTableId = async (id: string) => {
+
+  console.log('mwwwwwwww')
     if (!id) {
       console.error("User ID is undefined");
       return;
     }
+
+    console.log('ida', id)
   
     try {
-      // Update the user's tableId to null
       const userUpdate = await db.user.update({
         where: { id },
         data: {
@@ -18,7 +21,6 @@ export const deleteUserTableId = async (id: string) => {
   
       console.log(`User ${id} tableId set to null`, userUpdate);
   
-      // Fetch all tables that have the user ID in the players array
       const tables = await db.table.findMany({
         where: {
           players: {

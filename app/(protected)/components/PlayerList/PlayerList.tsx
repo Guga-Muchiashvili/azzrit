@@ -9,7 +9,7 @@ import { IUser } from "@/types/types";
 import Image from "next/image";
 
 const PlayerListComponent = () => {
-    const [table, setTable] = useState<ITable | null>(null);
+  const [table, setTable] = useState<ITable | null>(null);
   const { tableId } = useParams();
   const { getTableUsers } = useTypeContext();
   const [players, setPlayers] = useState<IUser[]>([]);
@@ -29,10 +29,11 @@ const PlayerListComponent = () => {
   }, [tableId, getTableUsers]);
   
 
+  console.log('table', table)
   
   return (
     <div className="w-full h-screen">
-      <CretorControlComponent id={table?.creatorId} />
+      <CretorControlComponent creatorId={table?.creatorId}  />
       <div className="w-full h-full flex flex-wrap p-20 gap-12">
       {players.map((item) => (
         <div key={item.id} className="w-96 h-80 bg-gray-500 rounded-xl relative flex">

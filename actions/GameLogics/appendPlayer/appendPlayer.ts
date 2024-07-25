@@ -20,10 +20,14 @@ export const appendPlayer = async (id: string, tableId: string) => {
       },
     });
 
-    console.log('isPlaying', isPlayerAlreadyInThisTable)
-    
 
-    if(isPlayerAlreadyInThisTable.length) return {status : 'Joined', tableId : isPlayerAlreadyInThisTable[0].id}
+
+    const user = await db.user.findFirst({
+      where : {id}
+    })
+
+
+    if(isPlayerAlreadyInThisTable.length ) return {status : 'Joined', tableId : isPlayerAlreadyInThisTable[0].id}
 
     const players = JSON.parse(table.players);
     players.push(id); 
@@ -40,14 +44,19 @@ export const appendPlayer = async (id: string, tableId: string) => {
       },
     });
 
+    const acceptedTables = [...JSON.parse(user?.acceptedTables as string), updatedTable.id]
+    
     const updateUser = await db.user.update({
       where : {
         id
       },
       data : {
-          tableId
+          tableId,
+          acceptedTables : JSON.stringify(acceptedTables)
       }
     })
+
+    
 
     return { success: "Player added successfully", table: updatedTable };
   } catch (error) {

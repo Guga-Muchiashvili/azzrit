@@ -95,3 +95,19 @@ export const isUserPlaying = async (id: string): Promise<boolean> => {
   }
 };
 
+export const waitingPlayerList = async(tableId : string) => {
+  try {
+    const table = await db.table.findFirst({
+      where : {id : tableId}
+    })
+
+    console.log('tab', table)
+
+    if(!table) return {error : "Table Not Found"}
+    
+    const waitingPlayers = JSON.parse(table.waitingPlayers)
+    return waitingPlayers
+  } catch (error) {
+    
+  }
+}

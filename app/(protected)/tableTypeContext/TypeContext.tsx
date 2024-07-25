@@ -53,7 +53,6 @@ export const TypeProvider = ({ children }: { children: ReactNode }) => {
         }
       })
 
-      console.log(enrichedTableData)
       setUsers(users as any)
       setTables(enrichedTableData as any) 
     } catch (error) {
