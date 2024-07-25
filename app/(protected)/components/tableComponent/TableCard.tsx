@@ -34,13 +34,16 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
     } else {
       const res = await sendRequest({ id: session.data?.user.id, itemId: item.id });
       console.log(res);
+      if(res.error){
+        toast.error(res.error);
+      }
       if (res.message === 'Already Sent') {
         toast.error('Already sent');
       }
-      if(res.sucess == 'Waiting Players Sent'){
+      if(res.success == 'Waiting Players Sent'){
         toast.success('Request sent');
       }
-      if (res.sucess === 'Joined') {
+      if (res.success === 'Joined') {
         return navigate.push(`/table/${item.id}`);
       }
     }

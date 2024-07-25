@@ -3,11 +3,13 @@
 import { db } from "@/lib/db"
 import { IUser } from "@/types/types"
 
-export const confirmRequest = async({id, tableId } : {id : string | undefined, tableId : string | undefined}) => {
+export const rejectRequest = async({id, tableId } : {id : string | undefined, tableId : string | undefined}) => {
 
     const user = await db.user.findFirst({
         where : {id}
     })
+
+    if(!user) return {message :"User Not found"}
 
     const table = await db.table.findFirst({
         where : {id : tableId}
@@ -15,16 +17,14 @@ export const confirmRequest = async({id, tableId } : {id : string | undefined, t
 
     if(!user) return {error : "User Not Found"}
 
-    const waitingPlayerList = [...JSON.parse(table?.waitingPlayers as string).map((item : IUser ) => item.id !== id)]
+    const waitingPlayerList = [...JSON.parse(table?.waitingPlayers as string).filter((item : IUser ) => item.id !== id)]
+
+    console.log('waitingaa', waitingPlayerList)
 
 
     if(JSON.parse(user.acceptedTables).includes(tableId)){
         return {message : "Already In"}
     }
-
-
-
-    const acceptedTable = [...JSON.parse(user.acceptedTables), tableId]
 
 
     const tableUpd = await db.table.update({
@@ -34,12 +34,5 @@ export const confirmRequest = async({id, tableId } : {id : string | undefined, t
         }
     })
 
-    const userUp = await db.user.update({
-        where : {id},
-        data : {
-            acceptedTables : JSON.stringify(acceptedTable)
-        }
-    })
-
-    return {sucess : "User Accepted"}
+    return {sucess : "User Rejected"}
 }

@@ -3,51 +3,52 @@ import { db } from "@/lib/db"
 import { IUser } from "@/types/types"
 import { appendPlayer } from "../appendPlayer/appendPlayer"
 
-export const sendRequest = async({id, itemId} : {id : string | undefined, itemId: string}) => {
-    const existtingTable = await db.table.findFirst({
-        where : {
-            id : itemId
+export const sendRequest = async ({ id, itemId }: { id: string | undefined, itemId: string }) => {
+    const existingTable = await db.table.findFirst({
+        where: {
+            id: itemId
         }
-    })
+    });
 
-    if(!existtingTable) return {error : "Table Not found"}
+    if (!existingTable) return { error: "Table Not found" };
 
     const user = await db.user.findFirst({
-        where : {id}
-    })
+        where: { id }
+    });
+
+    if (!user) return { error: "User Not found" };
 
     const table = await db.table.findFirst({
-        where : {id : itemId}
-    })
+        where: { id: itemId }
+    });
 
+    if (!table) return { error: "Table Not found" };
 
-    if(table?.creatorId == id) return {sucess : "Joined"}
+    if (table.creatorId === id) return { success: "Joined" };
 
-    if(JSON.parse(user?.acceptedTables as string).includes(itemId)) {
-        const res = await appendPlayer(id as string, itemId)
-        return {sucess : "Joined", tableId : res.tableId}
+    const acceptedTables = JSON.parse(user.acceptedTables as string);
+
+    if (acceptedTables.includes(itemId)) {
+        const res = await appendPlayer(id as string, itemId);
+        return { success: "Joined", tableId: res.tableId };
     }
 
-    const isSame = JSON.parse(table?.waitingPlayers as string).map((item : IUser) => {
-        console.log('dd', item, id)
-        if(item?.id == id ) {
-            return true
-        }
-        return false
-        })
+    const waitingPlayers = JSON.parse(table.waitingPlayers as string) || [];
 
-        if(isSame.includes(true)) return {message : "Already Sent"}
+    const isSame = waitingPlayers.some((player: IUser) => player.id === id);
 
-    const waitingPlayers = [...JSON.parse(table?.waitingPlayers as string), user]
+    if (isSame) return { message: "Already Sent" };
+
+    waitingPlayers.push(user);
 
     await db.table.update({
-        where : {
-            id : itemId
+        where: {
+            id: itemId
         },
-        data : {
-            waitingPlayers : JSON.stringify(waitingPlayers[0] == false ? null : waitingPlayers)
+        data: {
+            waitingPlayers: JSON.stringify(waitingPlayers)
         }
-    })
+    });
 
-    return {sucess : "Waiting Players Sent"}
-}
+    return { success: "Waiting Players Sent" };
+};

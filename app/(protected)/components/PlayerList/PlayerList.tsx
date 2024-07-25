@@ -7,12 +7,16 @@ import { ITable } from "../CreateTableForm/TableFormComponent/tableFormType";
 import { useTypeContext } from "../../tableTypeContext/TypeContext";
 import { IUser } from "@/types/types";
 import Image from "next/image";
+import { FaTrash } from "react-icons/fa";
+import { useSession } from "next-auth/react";
+import { deleteUserTableId } from "@/actions/GameLogics/deletePlayerFromTable/deletePlayer";
 
 const PlayerListComponent = () => {
   const [table, setTable] = useState<ITable | null>(null);
   const { tableId } = useParams();
   const { getTableUsers } = useTypeContext();
   const [players, setPlayers] = useState<IUser[]>([]);
+  const {data} = useSession()
 
   useEffect(() => {
     const getTable = async () => {
@@ -37,6 +41,8 @@ const PlayerListComponent = () => {
         <div key={item.id} className="w-96 h-80 bg-gray-500 rounded-xl relative flex">
             <div className="w-full h-14 flex gap-2 px-5 items-start py-3">
             <Image src={item.image as string} width={1200} height={1200} alt="picture" className="rounded-full h-12 w-12" />
+            {table?.creatorId === data?.user.id && <><FaTrash className="text-red-500 absolute bottom-2 right-2" onClick={() => deleteUserTableId(item.id, 'kick')}/></>}
+
             </div>
 
         </div>
