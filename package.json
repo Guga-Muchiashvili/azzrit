@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "npm run build && node server.js",
-    "build": "tsc",
-    "start": "node dist/server.js",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "node start",
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
@@ -36,6 +36,7 @@
     "next-cloudinary": "^6.6.2",
     "next-connect": "^1.0.0",
     "npm": "^10.8.1",
+    "pusher-js": "^8.4.0-rc2",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
