@@ -2,6 +2,7 @@
 import { getTableByCreator } from "@/actions/fetchData/dataRequests";
 import { ITableSend } from "@/app/(protected)/components/CreateTableForm/TableFormComponent/tableFormType";
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
 
 export const CreateTable = async (data: ITableSend) => {
 
@@ -42,6 +43,8 @@ export const CreateTable = async (data: ITableSend) => {
         tableId: table.id,
       },
     });
+
+    pusherServer.trigger('mafia-city', 'tables', table)
 
     return { success: "Table created successfully" };
   } catch (error) {

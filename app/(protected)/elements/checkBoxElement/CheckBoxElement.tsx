@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { RadioInputElementProps } from './radioInputElementTypes';
-import './styles.scss'; // Import your CSS file
+import './styles.scss'; 
 
 const RadioInputElement = ({ name, value, label }: RadioInputElementProps) => {
   const { control } = useFormContext();

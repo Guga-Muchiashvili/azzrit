@@ -3,12 +3,13 @@ import { db } from "@/lib/db";
 
 export const deleteUserTableId = async (id: string, mode? : string) => {
 
+  console.log(
+    'aq var'
+  )
     if (!id) {
       console.error("User ID is undefined");
       return;
     }
-
-
   
     try {
 
@@ -25,14 +26,17 @@ export const deleteUserTableId = async (id: string, mode? : string) => {
       });
   
       console.log(`Found tables with user ${id}:`, tables);
+
+      console.log('esari', user)
   
       for (const table of tables) {
         const playersArray = JSON.parse(table.players);
         const acceptedTables = JSON.parse(user?.acceptedTables as string)
         console.log(`Original players array for table ${table.id}:`, playersArray);
+        console.log('accu', acceptedTables)
   
-        const updatedAcceptedTables = acceptedTables.filter((item : string) => item !== tables[0].id)
-        const updatedPlayersArray = playersArray.filter((playerId: string) => playerId !== id);
+        const updatedAcceptedTables = acceptedTables?.filter((item : string) => item !== tables[0].id)
+        const updatedPlayersArray = playersArray?.filter((playerId: string) => playerId !== id);
         console.log(`Updated players array for table ${table.id}:`, updatedPlayersArray);
   
         await db.table.update({
