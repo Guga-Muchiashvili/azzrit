@@ -13,6 +13,8 @@ const TablePage = async() => {
     // // const table = await getTableById(tableId)
 
     // // console.log(table)
+
+    
   return (
     <TypeProvider>
     <div className='w-full h-screen bg-[#020e3d]'>

@@ -2,6 +2,7 @@
 import { db } from "@/lib/db"
 import { IUser } from "@/types/types"
 import { appendPlayer } from "../appendPlayer/appendPlayer"
+import { pusherServer } from "@/lib/pusher";
 
 export const sendRequest = async ({ id, itemId }: { id: string | undefined, itemId: string }) => {
     const existingTable = await db.table.findFirst({
@@ -49,6 +50,9 @@ export const sendRequest = async ({ id, itemId }: { id: string | undefined, item
             waitingPlayers: JSON.stringify(waitingPlayers)
         }
     });
+
+    pusherServer.trigger('mafia-city', 'requests', table)
+
 
     return { success: "Waiting Players Sent" };
 };

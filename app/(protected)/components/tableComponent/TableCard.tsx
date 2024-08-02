@@ -118,7 +118,7 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
         <div className="w-full h-2/5 mt-2 flex flex-wrap p-3 gap-5">
           {JSON.parse(item.players as any).map((player: string) =>
             users
-              .filter((user) => user.id === player)
+              ?.filter((user) => user.id === player)
               .map((matchingUser, i) => (
                 <motion.div
                   initial={{ opacity: 0, translateY: 10 }}

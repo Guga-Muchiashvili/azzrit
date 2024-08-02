@@ -10,6 +10,7 @@ import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { deleteUserTableId } from "@/actions/GameLogics/deletePlayerFromTable/deletePlayer";
+import { pusherClient } from "@/lib/pusher";
 
 const PlayerListComponent = () => {
   const [table, setTable] = useState<ITable | null>(null);
@@ -17,20 +18,26 @@ const PlayerListComponent = () => {
   const { getTableUsers } = useTypeContext();
   const [players, setPlayers] = useState<IUser[]>([]);
   const {data} = useSession()
+  const [requests, setRequests] = useState([])
 
   useEffect(() => {
+    pusherClient.subscribe('mafia-city')
     const getTable = async () => {
       const fetchedTable = await getTableById(tableId as string);
       if (fetchedTable) {
         setTable(fetchedTable as any);
         if ((fetchedTable as any).id) {
           const fetchedPlayers = await getTableUsers((fetchedTable as any).id);
-          setPlayers(fetchedPlayers as any);
+          pusherClient.bind('requests', (data : any) => setPlayers([...fetchedPlayers as any, data]))
+          
         }
       }
     };
     getTable();
+    
   }, [tableId, getTableUsers]);
+
+  console.log(players)
   
   
   return (
