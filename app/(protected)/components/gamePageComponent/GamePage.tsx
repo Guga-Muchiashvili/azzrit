@@ -36,7 +36,7 @@ const GamePageComponent = () => {
       const enrichedTable = { ...data, creator }
 
       console.log(enrichedTable)
-      setTab([...Tables as any, enrichedTable])
+      setTab([enrichedTable])
       console.log('Received table:', enrichedTable)
     })
 

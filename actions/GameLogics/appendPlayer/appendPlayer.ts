@@ -59,7 +59,7 @@ export const appendPlayer = async (id: string, tableId: string) => {
 
     console.log('shemovida')
 
-    pusherServer.trigger('mafia-city', 'tables', updatedTable)
+    pusherServer.trigger('mafia-city', 'players', updatedPlayers)
 
 
     return { success: "Player added successfully", table: updatedTable };
