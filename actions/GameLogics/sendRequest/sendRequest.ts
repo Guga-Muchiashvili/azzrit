@@ -51,7 +51,9 @@ export const sendRequest = async ({ id, itemId }: { id: string | undefined, item
         }
     });
 
-    console.log('waiting', waitingPlayers)
+    const tables = await db.table.findMany()
+
+    pusherServer.trigger('mafia-city', 'tables', tables)
     pusherServer.trigger('mafia-city', 'requests', waitingPlayers)
 
 

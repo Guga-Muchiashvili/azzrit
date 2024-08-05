@@ -1,5 +1,6 @@
 'use server'
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
 
 export const deleteUserTableId = async (id: string, mode?: string) => {
   console.log('aq var');
@@ -44,7 +45,7 @@ export const deleteUserTableId = async (id: string, mode?: string) => {
       const updatedPlayersArray = playersArray.filter((playerId: string) => playerId !== id);
       console.log(`Updated players array for table ${table.id}:`, updatedPlayersArray);
 
-      await db.table.update({
+     const updatedTable = await db.table.update({
         where: {
           id: table.id,
         },
@@ -61,6 +62,11 @@ export const deleteUserTableId = async (id: string, mode?: string) => {
           acceptedTables: mode == 'kick' ? JSON.stringify(updatedAcceptedTables) : user.acceptedTables,
         },
       });
+      
+
+      const tables = await db.table.findMany()
+
+      pusherServer.trigger('mafia-city', 'tables', tables)
 
       console.log(`Table ${table.id} updated with new players array and playerCount`);
       return userUpdate;

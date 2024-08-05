@@ -57,9 +57,10 @@ export const appendPlayer = async (id: string, tableId: string) => {
           acceptedTables : JSON.stringify(acceptedTables)
       }
     })
-    console.log('aqavar')
 
-    pusherServer.trigger('mafia-city', 'tables', updatedTable)
+    const tables = await db.table.findMany()
+
+    pusherServer.trigger('mafia-city', 'tables', tables)
 
 
     return { success: "Player added successfully", table: updatedTable };
