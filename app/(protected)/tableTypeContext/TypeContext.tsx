@@ -64,7 +64,6 @@ export const TypeProvider = ({ children }: { children: ReactNode }) => {
   const getTableUsers = async (tableId: string) => {
     try {
       const tables = await getEveryTable();
-      // Find the table with the matching ID
       const table = tables?.find((item) => item.id === tableId);
       
       if (table) {

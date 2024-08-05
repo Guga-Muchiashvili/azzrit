@@ -27,12 +27,11 @@ const PlayerListComponent = () => {
       if (fetchedTable) {
         setTable(fetchedTable as any);
         if ((fetchedTable as any).id) {
-          const fetchedPlayers = await getTableUsers((fetchedTable as any).id);
-          setPlayers(fetchedPlayers as any)
-          // pusherClient.bind('requests', (data : any) => {
-          //   console.log('datuna', data)
-          //   setPlayers([...fetchedPlayers as any, data])
-          // })
+          pusherClient.bind('tables', async(data : any) => {
+            const fetchedPlayers = await getTableUsers((fetchedTable as any).id);
+            console.log('datuna', data)
+            setPlayers(fetchedPlayers as any)
+          })
           
         }
       }

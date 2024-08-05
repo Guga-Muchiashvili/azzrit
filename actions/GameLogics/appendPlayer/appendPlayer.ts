@@ -1,5 +1,6 @@
 'use server'
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
 
 export const appendPlayer = async (id: string, tableId: string) => {
   try {
@@ -56,7 +57,10 @@ export const appendPlayer = async (id: string, tableId: string) => {
       }
     })
 
-    
+    console.log('shemovida')
+
+    pusherServer.trigger('mafia-city', 'tables', updatedTable)
+
 
     return { success: "Player added successfully", table: updatedTable };
   } catch (error) {

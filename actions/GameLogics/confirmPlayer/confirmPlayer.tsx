@@ -16,7 +16,7 @@ export const confirmRequest = async({id, tableId } : {id : string | undefined, t
 
     if(!user) return {error : "User Not Found"}
 
-    const waitingPlayerList = [...JSON.parse(table?.waitingPlayers as string).map((item : IUser ) => item.id !== id)]
+    const waitingPlayerList = [...JSON.parse(table?.waitingPlayers as string).filter((item : IUser ) => item.id !== id)]
 
 
     if(JSON.parse(user.acceptedTables).includes(tableId)){
