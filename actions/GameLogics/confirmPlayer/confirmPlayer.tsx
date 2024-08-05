@@ -25,7 +25,8 @@ export const confirmRequest = async({id, tableId } : {id : string | undefined, t
 
 
 
-    const acceptedTable = [...JSON.parse(user.acceptedTables), tableId]
+    const acceptedTable = JSON.parse(user.acceptedTables)
+    acceptedTable.push(tableId)
 
 
     const tableUpd = await db.table.update({

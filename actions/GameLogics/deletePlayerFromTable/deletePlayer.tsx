@@ -31,11 +31,13 @@ export const deleteUserTableId = async (id: string, mode? : string) => {
   
       for (const table of tables) {
         const playersArray = JSON.parse(table.players);
+        
         const acceptedTables = JSON.parse(user?.acceptedTables as string)
         console.log(`Original players array for table ${table.id}:`, playersArray);
-        console.log('accu', acceptedTables)
-  
+        
         const updatedAcceptedTables = acceptedTables?.filter((item : string) => item !== tables[0].id)
+
+        
         const updatedPlayersArray = playersArray?.filter((playerId: string) => playerId !== id);
         console.log(`Updated players array for table ${table.id}:`, updatedPlayersArray);
   

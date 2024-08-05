@@ -45,7 +45,8 @@ export const appendPlayer = async (id: string, tableId: string) => {
       },
     });
 
-    const acceptedTables = [...JSON.parse(user?.acceptedTables as string), updatedTable.id]
+    const acceptedTables = JSON.parse(user?.acceptedTables as any)
+    acceptedTables.push(updatedTable.id)
     
     const updateUser = await db.user.update({
       where : {
@@ -57,9 +58,9 @@ export const appendPlayer = async (id: string, tableId: string) => {
       }
     })
 
-    console.log('shemovida')
+    const tables = await db.table.findMany()
 
-    pusherServer.trigger('mafia-city', 'players', updatedPlayers)
+    pusherServer.trigger('mafia-city', 'tables', tables)
 
 
     return { success: "Player added successfully", table: updatedTable };

@@ -26,19 +26,19 @@ const PlayerListComponent = () => {
     const getTable = async () => {
       try {
         const fetchedTable = await getTableById(tableId as string);
-        console.log('fet', fetchedTable)
-        setPlayers(fetchedTable as any)
+        const fetchedPlayers = await getTableUsers(table?.id as any);
+        console.log(fetchedPlayers)
+        setPlayers(fetchedPlayers as any)
+
         if (fetchedTable) {
           setTable(fetchedTable as any);
-          if (fetchedTable.id) {
-            pusherClient.bind("players", (data: any) => {
-              console.log('changed')
-              console.log(data)
-              // const fetchedPlayers = await getTableUsers(data.id);
-              // setPlayers((prevPlayers) => [...prevPlayers, ...fetchedPlayers as any]);
-            });
-          }
         }
+
+        pusherClient.bind("tables", (data: any) => {
+          console.log('changed')
+          console.log(data)
+          // setPlayers((prevPlayers) => [...prevPlayers, ...fetchedPlayers as any]);
+        });
       } catch (error) {
         console.error("Error fetching table:", error);
       }

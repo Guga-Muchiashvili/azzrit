@@ -44,6 +44,7 @@ export const CreateTable = async (data: ITableSend) => {
       },
     });
 
+
     pusherServer.trigger('mafia-city', 'tables', table)
 
     return { success: "Table created successfully" };
