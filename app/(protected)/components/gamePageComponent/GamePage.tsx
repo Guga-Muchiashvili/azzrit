@@ -32,6 +32,7 @@ const GamePageComponent = () => {
     }
 
     pusherClient.bind('tables', async (data: ITable[]) => {
+      console.log('changed')
       const enhancedTables = await Promise.all(
         data.map(async (table) => {
           const creator = await getUserById(table.creatorId)
@@ -46,7 +47,7 @@ const GamePageComponent = () => {
       pusherClient.unsubscribe('mafia-city')
       pusherClient.unbind('tables')
     }
-  }, [session.data?.user.id])
+  }, [session.data?.user.id, fetchData])
 
   return (
     <div className="w-full min-h-screen relative flex flex-col items-center py-9" id="MainPage">

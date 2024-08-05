@@ -27,7 +27,7 @@ const CretorControlComponent = ({
 
   const acceptPlayer = useCallback(async (id: string) => {
     const res = await confirmRequest({ id, tableId: tableId as string });
-    if (res.sucess == "User Accepted") {
+    if (res.success == "User Accepted") {
       toast.success("User Accepted");
     }
     if (res.message == "Already In") {

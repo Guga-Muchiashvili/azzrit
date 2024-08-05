@@ -57,6 +57,7 @@ export const appendPlayer = async (id: string, tableId: string) => {
           acceptedTables : JSON.stringify(acceptedTables)
       }
     })
+    console.log('aqavar')
 
     pusherServer.trigger('mafia-city', 'tables', updatedTable)
 
