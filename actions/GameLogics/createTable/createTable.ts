@@ -44,8 +44,9 @@ export const CreateTable = async (data: ITableSend) => {
       },
     });
 
+   const tables = await db.table.findMany()
 
-    pusherServer.trigger('mafia-city', 'tables', table)
+    pusherServer.trigger('mafia-city', 'tables', tables)
 
     return { success: "Table created successfully" };
   } catch (error) {

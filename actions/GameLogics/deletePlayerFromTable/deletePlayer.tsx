@@ -34,8 +34,10 @@ export const deleteUserTableId = async (id: string, mode? : string) => {
         
         const acceptedTables = JSON.parse(user?.acceptedTables as string)
         console.log(`Original players array for table ${table.id}:`, playersArray);
+
+        let updatedAcceptedTables = []
         
-        const updatedAcceptedTables = acceptedTables?.filter((item : string) => item !== tables[0].id)
+        if(acceptedTables) updatedAcceptedTables = acceptedTables?.filter((item : string) => item !== tables[0].id)
 
         
         const updatedPlayersArray = playersArray?.filter((playerId: string) => playerId !== id);
@@ -55,7 +57,7 @@ export const deleteUserTableId = async (id: string, mode? : string) => {
           where: { id },
           data: {
             tableId: null,
-            acceptedTables : JSON.stringify(mode =='kick' ? updatedAcceptedTables : user?.acceptedTables)
+            acceptedTables : mode =='kick' ? JSON.stringify( updatedAcceptedTables ) : user?.acceptedTables
           },
         });
   

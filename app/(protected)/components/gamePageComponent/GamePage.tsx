@@ -31,11 +31,15 @@ const GamePageComponent = () => {
       deleteTableId(session.data.user.id)
     }
 
-    pusherClient.bind('tables', async (data: any) => {
-      const creator = await getUserById(data.creatorId)
-      const enrichedTable = { ...data, creator }
-      setTab((prevTab) => [...prevTab, enrichedTable])
-      console.log('Received table:', enrichedTable)
+    pusherClient.bind('tables', async (data: ITable[]) => {
+      const enhancedTables = await Promise.all(
+        data.map(async (table) => {
+          const creator = await getUserById(table.creatorId)
+          return { ...table, creator }
+        })
+      )
+      setTab(enhancedTables as ITable[])
+      console.log('Received tables:', enhancedTables)
     })
 
     return () => {

@@ -26,7 +26,7 @@ const PlayerListComponent = () => {
     const getTable = async () => {
       try {
         const fetchedTable = await getTableById(tableId as string);
-        const fetchedPlayers = await getTableUsers(table?.id as any);
+        const fetchedPlayers = await getTableUsers(fetchedTable?.id as string);
         console.log(fetchedPlayers)
         setPlayers(fetchedPlayers as any)
 
