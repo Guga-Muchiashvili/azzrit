@@ -51,7 +51,8 @@ export const sendRequest = async ({ id, itemId }: { id: string | undefined, item
         }
     });
 
-    pusherServer.trigger('mafia-city', 'requests', table)
+    console.log('waiting', waitingPlayers)
+    pusherServer.trigger('mafia-city', 'requests', waitingPlayers)
 
 
     return { success: "Waiting Players Sent" };

@@ -48,7 +48,7 @@ const FormComponent = ({ schema, onLanding }: IFormComponentProps) => {
           if (res?.error) {
             toast.error(res?.error);
           } else {
-            if (res?.succes) {
+            if (res?.success ) {
               toast.success("Email Sent");
               return setTimeout(() => {
                 navigate.push("signIn");

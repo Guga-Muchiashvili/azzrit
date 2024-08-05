@@ -28,7 +28,11 @@ const PlayerListComponent = () => {
         setTable(fetchedTable as any);
         if ((fetchedTable as any).id) {
           const fetchedPlayers = await getTableUsers((fetchedTable as any).id);
-          pusherClient.bind('requests', (data : any) => setPlayers([...fetchedPlayers as any, data]))
+          setPlayers(fetchedPlayers as any)
+          // pusherClient.bind('requests', (data : any) => {
+          //   console.log('datuna', data)
+          //   setPlayers([...fetchedPlayers as any, data])
+          // })
           
         }
       }
@@ -47,7 +51,7 @@ const PlayerListComponent = () => {
       {players.map((item) => (
         <div key={item.id} className="w-96 h-80 bg-gray-500 rounded-xl relative flex">
             <div className="w-full h-14 flex gap-2 px-5 items-start py-3">
-            <Image src={item.image as string} width={1200} height={1200} alt="picture" className="rounded-full h-12 w-12" />
+            <Image src={item.image as string || ''} width={1200} height={1200} alt="picture" className="rounded-full h-12 w-12" />
             {table?.creatorId === data?.user.id && <><FaTrash className="text-red-500 absolute bottom-2 right-2" onClick={() => deleteUserTableId(item.id, 'kick')}/></>}
 
             </div>

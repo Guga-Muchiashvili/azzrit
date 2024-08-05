@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { FaChevronCircleRight } from "react-icons/fa";
 import { toast } from "sonner";
 import { FaTrash } from "react-icons/fa";
+import { pusherClient } from "@/lib/pusher";
 
 
 const CretorControlComponent = ({
@@ -26,9 +27,13 @@ const CretorControlComponent = ({
   useEffect(() => {
     const getWaitingPlayers = async () => {
       const players = await waitingPlayerList(tableId as string);
-      setPlayers(players);
+      // setPlayers(players);
     };
     getWaitingPlayers();
+    pusherClient.bind('requests', (data : any) => {
+      console.log('datuna', data)
+      setPlayers(data)
+    })
   }, []);
 
   console.log(playerList);
