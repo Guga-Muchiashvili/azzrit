@@ -1,6 +1,7 @@
 'use server'
 
 import { db } from "@/lib/db"
+import { pusherServer } from "@/lib/pusher"
 import { IUser } from "@/types/types"
 
 export const rejectRequest = async({id, tableId } : {id : string | undefined, tableId : string | undefined}) => {
@@ -33,6 +34,9 @@ export const rejectRequest = async({id, tableId } : {id : string | undefined, ta
             waitingPlayers : JSON.stringify(waitingPlayerList as any)
         }
     })
+
+    pusherServer.trigger('mafia-city', 'requests', waitingPlayerList);
+
 
     return {sucess : "User Rejected"}
 }

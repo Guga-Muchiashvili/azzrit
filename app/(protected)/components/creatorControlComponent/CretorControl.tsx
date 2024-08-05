@@ -6,12 +6,11 @@ import { IUser } from "@/types/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { FaChevronCircleRight } from "react-icons/fa";
 import { toast } from "sonner";
 import { FaTrash } from "react-icons/fa";
 import { pusherClient } from "@/lib/pusher";
-
 
 const CretorControlComponent = ({
   creatorId,
@@ -24,37 +23,44 @@ const CretorControlComponent = ({
 
   const { tableId } = useParams();
 
-  useEffect(() => {
-    const getWaitingPlayers = async () => {
-      const players = await waitingPlayerList(tableId as string);
-      // setPlayers(players);
-    };
-    getWaitingPlayers();
-    pusherClient.bind('requests', (data : any) => {
-      console.log('datuna', data)
-      setPlayers(data)
-    })
-  }, []);
-
   console.log(playerList);
 
-  const acceptPlayer = async (id: string) => {
-    const res = await confirmRequest({ id: id, tableId: tableId as string });
+  const acceptPlayer = useCallback(async (id: string) => {
+    const res = await confirmRequest({ id, tableId: tableId as string });
     if (res.sucess == "User Accepted") {
-      toast.success("Usser Accepted");
+      toast.success("User Accepted");
     }
     if (res.message == "Already In") {
       toast.error("User is already on Table");
     }
-  };
+  }, [tableId]);
 
-  const rejectPlayer = async (id: string) => {
-    const res = await rejectRequest({ id: id, tableId: tableId as string });
+  const rejectPlayer = useCallback(async (id: string) => {
+    const res = await rejectRequest({ id, tableId: tableId as string });
     console.log(res);
-    if (res.sucess == 'User Rejected"') {
+    if (res.sucess == 'User Rejected') {
       toast.success("User Rejected");
     }
-  };
+  }, [tableId]);
+
+  useEffect(() => {
+    const getWaitingPlayers = async () => {
+      const players = await waitingPlayerList(tableId as string);
+      setPlayers(players);
+    };
+    
+    getWaitingPlayers();
+
+    const handlePusherEvent = (data: any) => {
+      setPlayers(data);
+    };
+
+    pusherClient.bind('requests', handlePusherEvent);
+
+    return () => {
+      pusherClient.unbind('requests', handlePusherEvent);
+    };
+  }, [tableId]);
 
   return (
     <>
