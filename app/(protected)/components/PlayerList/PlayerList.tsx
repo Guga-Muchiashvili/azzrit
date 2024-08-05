@@ -26,35 +26,40 @@ const PlayerListComponent = () => {
     const getTable = async () => {
       try {
         const fetchedTable = await getTableById(tableId as string);
-        const fetchedPlayers = await getTableUsers(fetchedTable?.id as string);
-        console.log(fetchedPlayers)
-        setPlayers(fetchedPlayers as any)
-
         if (fetchedTable) {
           setTable(fetchedTable as any);
+          const fetchedPlayers = await getTableUsers(fetchedTable.id);
+          setPlayers(fetchedPlayers as any);
         }
-
-        pusherClient.bind("tables", (data: any) => {
-          console.log('changed')
-          console.log(data)
-          // setPlayers((prevPlayers) => [...prevPlayers, ...fetchedPlayers as any]);
-        });
       } catch (error) {
         console.error("Error fetching table:", error);
       }
     };
     getTable();
 
+    pusherClient.bind("tables", async (data: any) => {
+      console.log('Table data changed', data);
+      if (data.id === tableId) {
+        const updatedTable = await getTableById(tableId as string);
+        if (updatedTable) {
+          setTable(updatedTable as any);
+          const updatedPlayers = await getTableUsers(updatedTable.id);
+          setPlayers(updatedPlayers as any);
+        }
+      }
+    });
+
     return () => {
       pusherClient.unsubscribe("mafia-city");
+      pusherClient.unbind("tables");
     };
-  }, [tableId, getTableUsers, pusherClient, getTableById]);
+  }, [tableId, getTableUsers, data?.user.id]);
 
   return (
     <div className="w-full h-screen">
       <CretorControlComponent creatorId={table?.creatorId} />
       <div className="w-full h-full flex flex-wrap p-20 gap-12">
-        {players.length > 0 &&  players.map((item) => (
+        {players.length > 0 && players.map((item) => (
           <div
             key={item.id}
             className="w-96 h-80 bg-gray-500 rounded-xl relative flex"
