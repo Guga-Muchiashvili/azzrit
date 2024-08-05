@@ -23,8 +23,6 @@ const CretorControlComponent = ({
 
   const { tableId } = useParams();
 
-  console.log(playerList);
-
   const acceptPlayer = useCallback(async (id: string) => {
     const res = await confirmRequest({ id, tableId: tableId as string });
     if (res.success == "User Accepted") {
@@ -37,7 +35,6 @@ const CretorControlComponent = ({
 
   const rejectPlayer = useCallback(async (id: string) => {
     const res = await rejectRequest({ id, tableId: tableId as string });
-    console.log(res);
     if (res.sucess == 'User Rejected') {
       toast.success("User Rejected");
     }

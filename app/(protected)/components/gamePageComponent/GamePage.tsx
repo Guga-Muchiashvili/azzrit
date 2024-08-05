@@ -24,7 +24,6 @@ const GamePageComponent = () => {
 
     const deleteTableId = async (id: string) => {
       const res = await deleteUserTableId(id)
-      console.log(res)
     }
 
     if (session.data?.user.id) {
@@ -32,7 +31,6 @@ const GamePageComponent = () => {
     }
 
     pusherClient.bind('tables', async (data: ITable[]) => {
-      console.log('changed')
       const enhancedTables = await Promise.all(
         data.map(async (table) => {
           const creator = await getUserById(table.creatorId)
@@ -40,7 +38,6 @@ const GamePageComponent = () => {
         })
       )
       setTab(enhancedTables as ITable[])
-      console.log('Received tables:', enhancedTables)
     })
 
     return () => {

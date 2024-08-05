@@ -72,8 +72,6 @@ export const TypeProvider = ({ children }: { children: ReactNode }) => {
         const players = JSON.parse(playersJson);
         const userPromises = players.map((id : string) => getUserById(id));
         const users = await Promise.all(userPromises);
-        
-        users.forEach((user: any) => console.log(user));
         return users;
       } else {
         console.error('Table not found');

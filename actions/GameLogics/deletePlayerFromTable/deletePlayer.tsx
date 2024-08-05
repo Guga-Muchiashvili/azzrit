@@ -3,7 +3,6 @@ import { db } from "@/lib/db";
 import { pusherServer } from "@/lib/pusher";
 
 export const deleteUserTableId = async (id: string, mode?: string) => {
-  console.log('aq var');
   
   if (!id) {
     console.error("User ID is undefined");
@@ -28,8 +27,6 @@ export const deleteUserTableId = async (id: string, mode?: string) => {
       },
     });
 
-    console.log(`Found tables with user ${id}:`, tables);
-    console.log('esari', user);
 
     for (const table of tables) {
       const playersArray = JSON.parse(table.players);

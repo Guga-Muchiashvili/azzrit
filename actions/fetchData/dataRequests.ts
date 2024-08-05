@@ -32,7 +32,6 @@ export const getUserById = async (id: string | undefined) => {
 export const getEveryUser = async () => {
   try {
     const users = await db.user.findMany()
-    console.log(users);
     return users;
   } catch (error) {
     console.log(error);
@@ -53,7 +52,6 @@ export const getTableByCreator = async (id: string | undefined) => {
 };
 
 export const getTableById = async (id: string | undefined) => {
-  console.log(id);
   try {
     const existingTable = await db.table.findUnique({
       where: {
@@ -69,7 +67,6 @@ export const getTableById = async (id: string | undefined) => {
 export const getEveryTable = async () => {
   try {
     const Tables = await db.table.findMany();
-    console.log(Tables)
     return Tables;
   } catch (error) {
     console.log(error);
@@ -100,8 +97,6 @@ export const waitingPlayerList = async (tableId: string) => {
     const table = await db.table.findFirst({
       where: { id: tableId },
     });
-
-    console.log("tab", table);
 
     if (!table) return { error: "Table Not Found" };
 

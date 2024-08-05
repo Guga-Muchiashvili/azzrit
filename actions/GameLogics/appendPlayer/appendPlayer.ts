@@ -63,6 +63,7 @@ export const appendPlayer = async (id: string, tableId: string) => {
     pusherServer.trigger('mafia-city', 'tables', tables)
 
 
+
     return { success: "Player added successfully", table: updatedTable };
   } catch (error) {
     console.error("Error updating table:", error);

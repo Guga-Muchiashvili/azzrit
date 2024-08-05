@@ -52,7 +52,7 @@ const PlayerListComponent = () => {
       pusherClient.unsubscribe("mafia-city");
       pusherClient.unbind("tables", handleTableUpdate);
     };
-  }, [tableId, fetchTableData]);
+  }, [tableId, fetchTableData, table]);
 
   return (
     <div className="w-full h-screen">
