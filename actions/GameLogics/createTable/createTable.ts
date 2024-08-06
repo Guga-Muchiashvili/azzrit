@@ -17,7 +17,6 @@ export const CreateTable = async (data: ITableSend) => {
     },
   });
 
-  console.log(existingTable, isPlayerAlreadyInThisTable)
 
   if (existingTable || isPlayerAlreadyInThisTable.length ) {
     return { error: "You Are in another Table" };

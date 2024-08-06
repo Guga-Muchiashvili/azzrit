@@ -44,7 +44,7 @@ const GamePageComponent = () => {
       pusherClient.unsubscribe('mafia-city')
       pusherClient.unbind('tables')
     }
-  }, [session.data?.user.id, fetchData])
+  }, [session.data?.user.id])
 
   return (
     <div className="w-full min-h-screen relative flex flex-col items-center py-9" id="MainPage">

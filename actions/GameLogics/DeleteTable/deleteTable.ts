@@ -2,6 +2,7 @@
 import { getTableByCreator, getTableById } from "@/actions/fetchData/dataRequests";
 import { ITableSend } from "@/app/(protected)/components/CreateTableForm/TableFormComponent/tableFormType";
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
 
 export const deleteTable = async (id: string, creatorId: string) => {
   // Fetch the existing table
@@ -35,6 +36,12 @@ export const deleteTable = async (id: string, creatorId: string) => {
         tableId: null
       },
     });
+
+    const tables = await db.table.findMany()
+
+    pusherServer.trigger('mafia-city', 'tables', tables)
+
+
 
     return { success: "Table deleted successfully" };
   } catch (error) {

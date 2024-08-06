@@ -13,13 +13,11 @@ const CreateModal = ({type, ides } : {type : "FORM" | "REMOVE", ides? :{id : str
   const { defineType, type:tableType, fetchData, toggleModal, } = useTypeContext();
 
   const DeleteTable = async() => {
-    console.log(ides?.id, ides?.creatorId)
     const res = await deleteTable(ides?.id as string, ides?.creatorId as string);
     fetchData();
     toggleModal()
   }
 
-  console.log(ides)
   return (
     <motion.div initial={{opacity : 0}} animate={{opacity : 1}} transition={{duration : .6, ease : "easeIn"}} className='w-full min-h-full absolute left-0 top-0 z-30 bg-black bg-opacity-60 flex py-72 justify-center'>
         {type == 'FORM' ? <TableFormComponent/> : <div className='fixed justify-around w-96 rounded-3xl h-40 flex flex-col  items-center bg-white'>

@@ -12,7 +12,6 @@ const TablePage = async() => {
     // const {tableId} = useParams()
     // // const table = await getTableById(tableId)
 
-    // // console.log(table)
 
     
   return (

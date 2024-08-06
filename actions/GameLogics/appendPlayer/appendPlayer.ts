@@ -60,6 +60,7 @@ export const appendPlayer = async (id: string, tableId: string) => {
 
     const tables = await db.table.findMany()
 
+    console.log('updated', tables)
     pusherServer.trigger('mafia-city', 'tables', tables)
 
 

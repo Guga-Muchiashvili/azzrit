@@ -33,7 +33,6 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
       }
     } else {
       const res = await sendRequest({ id: session.data?.user.id, itemId: item.id });
-      console.log(res);
       if(res.error){
         toast.error(res.error);
       }

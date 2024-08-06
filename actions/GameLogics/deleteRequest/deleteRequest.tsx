@@ -20,8 +20,6 @@ export const rejectRequest = async({id, tableId } : {id : string | undefined, ta
 
     const waitingPlayerList = [...JSON.parse(table?.waitingPlayers as string).filter((item : IUser ) => item.id !== id)]
 
-    console.log('waitingaa', waitingPlayerList)
-
 
     if(JSON.parse(user.acceptedTables).includes(tableId)){
         return {message : "Already In"}

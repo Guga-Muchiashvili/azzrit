@@ -8,7 +8,6 @@ export const getVerificationTokenByToken = async (token: string) => {
             }
         });
 
-        console.log('Verification token found:', verificationToken);
         return verificationToken;
     } catch (error) {
         console.error('Error querying the database:', error);

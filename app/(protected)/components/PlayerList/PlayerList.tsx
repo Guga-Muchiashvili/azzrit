@@ -17,7 +17,7 @@ const PlayerListComponent = () => {
   const { tableId } = useParams();
   const { getTableUsers } = useTypeContext();
   const [players, setPlayers] = useState<IUser[]>([]);
-  const { data } = useSession();
+  const { data: sessionData } = useSession();
 
   const fetchTableData = useCallback(async (id: string) => {
     try {
@@ -37,20 +37,19 @@ const PlayerListComponent = () => {
 
     fetchTableData(tableId as string);
 
-    pusherClient.subscribe("mafia-city");
+    const channel = pusherClient.subscribe("mafia-city");
 
     const handleTableUpdate = async (data: any) => {
-      console.log("Table data changed", data);
       if (data.id === tableId) {
         fetchTableData(tableId as string);
       }
     };
 
-    pusherClient.bind("tables", handleTableUpdate);
+    channel.bind("tables", handleTableUpdate);
 
     return () => {
+      channel.unbind("tables", handleTableUpdate);
       pusherClient.unsubscribe("mafia-city");
-      pusherClient.unbind("tables", handleTableUpdate);
     };
   }, [tableId, fetchTableData, table]);
 
@@ -72,9 +71,9 @@ const PlayerListComponent = () => {
                   alt="picture"
                   className="rounded-full h-12 w-12"
                 />
-                {table?.creatorId === data?.user.id && (
+                {table?.creatorId === sessionData?.user.id && (
                   <FaTrash
-                    className="text-red-500 absolute bottom-2 right-2"
+                    className="text-red-500 absolute bottom-2 right-2 cursor-pointer"
                     onClick={() => deleteUserTableId(item.id, "kick")}
                   />
                 )}
@@ -86,4 +85,4 @@ const PlayerListComponent = () => {
   );
 };
 
-export default PlayerListComponent;
+export default React.memo(PlayerListComponent);

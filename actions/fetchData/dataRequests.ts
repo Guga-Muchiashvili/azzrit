@@ -83,7 +83,6 @@ export const isUserPlaying = async (id: string): Promise<boolean> => {
       },
     });
 
-    console.log("Table found:", table);
 
     return table !== null;
   } catch (error) {
