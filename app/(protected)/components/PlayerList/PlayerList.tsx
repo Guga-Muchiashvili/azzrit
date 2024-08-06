@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
-import { getTableById } from "@/actions/fetchData/dataRequests";
+import { getTableById, getUserById } from "@/actions/fetchData/dataRequests";
 import { ITable } from "../CreateTableForm/TableFormComponent/tableFormType";
 import { useTypeContext } from "../../tableTypeContext/TypeContext";
 import { IUser } from "@/types/types";
@@ -11,6 +11,9 @@ import { useSession } from "next-auth/react";
 import { deleteUserTableId } from "@/actions/GameLogics/deletePlayerFromTable/deletePlayer";
 import { pusherClient } from "@/lib/pusher";
 import CretorControlComponent from "../creatorControlComponent/CretorControl";
+import { useRouter } from "next/navigation";
+import { appendPlayer } from "@/actions/GameLogics/appendPlayer/appendPlayer";
+import { sendRequest } from "@/actions/GameLogics/sendRequest/sendRequest";
 
 const PlayerListComponent = () => {
   const [table, setTable] = useState<ITable | null>(null);
@@ -18,6 +21,7 @@ const PlayerListComponent = () => {
   const { getTableUsers } = useTypeContext();
   const [players, setPlayers] = useState<IUser[]>([]);
   const { data: sessionData } = useSession();
+  const navigate = useRouter()
 
   const fetchTableData = useCallback(async (id: string) => {
     try {
@@ -35,6 +39,19 @@ const PlayerListComponent = () => {
   useEffect(() => {
     if (!tableId) return;
 
+    const CheckIsValid = async() => {
+      const user = await getUserById(sessionData?.user.id)
+
+      if(!user?.acceptedTables.includes(tableId as string)) {
+        return navigate.push('/')
+      }
+      else{
+        const res = await sendRequest({ id: sessionData?.user.id, itemId : tableId as string})
+      }
+    }
+
+    CheckIsValid()
+
     fetchTableData(tableId as string);
 
     const channel = pusherClient.subscribe("mafia-city");
@@ -46,6 +63,8 @@ const PlayerListComponent = () => {
     };
 
     channel.bind("tables", handleTableUpdate);
+
+    
 
     return () => {
       channel.unbind("tables", handleTableUpdate);
