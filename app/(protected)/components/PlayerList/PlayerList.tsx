@@ -21,36 +21,41 @@ const PlayerListComponent = () => {
   const { getTableUsers } = useTypeContext();
   const [players, setPlayers] = useState<IUser[]>([]);
   const { data: sessionData } = useSession();
-  const navigate = useRouter()
+  const navigate = useRouter();
 
-  const fetchTableData = useCallback(async (id: string) => {
-    try {
-      const fetchedTable = await getTableById(id);
-      if (fetchedTable) {
-        setTable(fetchedTable as any);
-        const fetchedPlayers = await getTableUsers(fetchedTable.id);
-        setPlayers(fetchedPlayers as any);
+  const fetchTableData = useCallback(
+    async (id: string) => {
+      try {
+        const fetchedTable = await getTableById(id);
+        if (fetchedTable) {
+          setTable(fetchedTable as any);
+          const fetchedPlayers = await getTableUsers(fetchedTable.id);
+          setPlayers(fetchedPlayers as any);
+        }
+      } catch (error) {
+        console.error("Error fetching table:", error);
       }
-    } catch (error) {
-      console.error("Error fetching table:", error);
-    }
-  }, [getTableUsers]);
+    },
+    [getTableUsers]
+  );
 
   useEffect(() => {
     if (!tableId) return;
 
-    const CheckIsValid = async() => {
-      const user = await getUserById(sessionData?.user.id)
+    const CheckIsValid = async () => {
+      const user = await getUserById(sessionData?.user.id);
 
-      if(!user?.acceptedTables.includes(tableId as string)) {
-        return navigate.push('/')
+      if (!user?.acceptedTables.includes(tableId as string)) {
+        return navigate.push("/");
+      } else {
+        const res = await sendRequest({
+          id: sessionData?.user.id,
+          itemId: tableId as string,
+        });
       }
-      else{
-        const res = await sendRequest({ id: sessionData?.user.id, itemId : tableId as string})
-      }
-    }
+    };
 
-    CheckIsValid()
+    CheckIsValid();
 
     fetchTableData(tableId as string);
 
@@ -64,13 +69,11 @@ const PlayerListComponent = () => {
 
     channel.bind("tables", handleTableUpdate);
 
-    
-
     return () => {
       channel.unbind("tables", handleTableUpdate);
       pusherClient.unsubscribe("mafia-city");
     };
-  }, [tableId, fetchTableData, table]);
+  }, [sessionData?.user]);
 
   return (
     <div className="w-full h-screen">
@@ -90,12 +93,13 @@ const PlayerListComponent = () => {
                   alt="picture"
                   className="rounded-full h-12 w-12"
                 />
-                {table?.creatorId === sessionData?.user.id && (
-                  <FaTrash
-                    className="text-red-500 absolute bottom-2 right-2 cursor-pointer"
-                    onClick={() => deleteUserTableId(item.id, "kick")}
-                  />
-                )}
+                {table?.creatorId === sessionData?.user.id &&
+                  sessionData?.user.id !== item.id && (
+                    <FaTrash
+                      className="text-red-500 absolute bottom-2 right-2 cursor-pointer"
+                      onClick={() => deleteUserTableId(item.id, "kick")}
+                    />
+                  )}
               </div>
             </div>
           ))}

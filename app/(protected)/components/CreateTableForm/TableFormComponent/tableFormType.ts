@@ -26,6 +26,7 @@ export type ITableSend = {
     title : string,
     playerCount : number,
     gameStarted : boolean,
+    waitingPlayers : IUser[],
     players : String[]
   }
 

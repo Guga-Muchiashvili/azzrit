@@ -13,9 +13,10 @@ import { useRouter } from "next/navigation";
 import { appendPlayer } from "@/actions/GameLogics/appendPlayer/appendPlayer";
 import { sendRequest } from "@/actions/GameLogics/sendRequest/sendRequest";
 import { toast, Toaster } from "sonner";
+import { IUser } from "@/types/types";
 
 const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
-  const session = useSession();
+  const { data: session } = useSession();
   const { users, toggleModal, modal } = useTypeContext();
   const navigate = useRouter();
   const [id, setId] = useState({ id: "", creatorId: "" });
@@ -26,13 +27,13 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
   };
 
   const SendRequest = async () => {
-    if (item.tableType === 'public' || item.creatorId === session.data?.user.id) {
-      const res = await appendPlayer(session.data?.user.id as string, item.id);
+    if (item.tableType === 'public' || item.creatorId === session?.user?.id) {
+      const res = await appendPlayer(session?.user?.id as string, item.id);
       if (res.tableId === item.id || res.success) {
         return navigate.push(`/table/${item.id}`);
       }
     } else {
-      const res = await sendRequest({ id: session.data?.user.id, itemId: item.id });
+      const res = await sendRequest({ id: session?.user?.id, itemId: item.id });
       if(res.error){
         toast.error(res.error);
       }
@@ -153,7 +154,7 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
               transition={{ duration: 1.2, delay: 0.3 }}
               className="text-white font-semibold flex items-center gap-2"
             >
-              {item.creatorId == session.data?.user.id && (
+              {item.creatorId === session?.user?.id && (
                 <MdDelete
                   className="text-3xl text-red-500 cursor-pointer"
                   onClick={() => DeleteTable()}
@@ -173,9 +174,12 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
           >
             {item.gameStarted
               ? "Spectate"
-              : item.creatorId == session?.data?.user.id
+              : item.creatorId === session?.user?.id || users.some(user => user.id === session?.user?.id && user.acceptedTables.includes(item.id)) || item.tableType == 'public'
               ? "join"
+              : JSON.parse(item.waitingPlayers as any).some((player : IUser) => player.id === session?.user?.id)
+              ? "Sent"
               : "Request"}
+
           </motion.button>
         </div>
       </motion.div>

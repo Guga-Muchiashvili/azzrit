@@ -5,5 +5,6 @@ export interface IUser {
     emailVerified: Date | null;
     image: string | null;
     password: string | Buffer;
+    acceptedTables : string[]
 }
 
