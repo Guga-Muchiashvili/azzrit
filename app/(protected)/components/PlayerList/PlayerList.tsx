@@ -14,6 +14,7 @@ import CretorControlComponent from "../creatorControlComponent/CretorControl";
 import { useRouter } from "next/navigation";
 import { appendPlayer } from "@/actions/GameLogics/appendPlayer/appendPlayer";
 import { sendRequest } from "@/actions/GameLogics/sendRequest/sendRequest";
+import { confirmRequest } from "@/actions/GameLogics/confirmPlayer/confirmPlayer";
 
 const PlayerListComponent = () => {
   const [table, setTable] = useState<ITable | null>(null);
@@ -27,6 +28,7 @@ const PlayerListComponent = () => {
     async (id: string) => {
       try {
         const fetchedTable = await getTableById(id);
+        
         if (fetchedTable) {
           setTable(fetchedTable as any);
           const fetchedPlayers = await getTableUsers(fetchedTable.id);
@@ -36,7 +38,7 @@ const PlayerListComponent = () => {
         console.error("Error fetching table:", error);
       }
     },
-    [getTableUsers]
+    []
   );
 
   useEffect(() => {
@@ -45,13 +47,15 @@ const PlayerListComponent = () => {
     const CheckIsValid = async () => {
       const user = await getUserById(sessionData?.user.id);
 
-      if (!user?.acceptedTables.includes(tableId as string)) {
+      if (user?.acceptedTables.includes(tableId as string) == false) {
+        console.log('kicking')
         return navigate.push("/");
       } else {
         const res = await sendRequest({
           id: sessionData?.user.id,
           itemId: tableId as string,
         });
+        console.log(res)
       }
     };
 
@@ -73,7 +77,7 @@ const PlayerListComponent = () => {
       channel.unbind("tables", handleTableUpdate);
       pusherClient.unsubscribe("mafia-city");
     };
-  }, [sessionData?.user]);
+  }, [sessionData]);
 
   return (
     <div className="w-full h-screen">
