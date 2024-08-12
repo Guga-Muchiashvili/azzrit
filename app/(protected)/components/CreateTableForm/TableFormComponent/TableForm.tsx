@@ -8,7 +8,7 @@ import { useTypeContext } from "@/app/(protected)/tableTypeContext/TypeContext";
 import TextInputElement from "@/app/(protected)/elements/textInputElement/TextInputElement";
 import RadioInputElement from "@/app/(protected)/elements/checkBoxElement/CheckBoxElement";
 import { useSession } from "next-auth/react";
-import {  ITableForm, ITableSend } from "./tableFormType";
+import { ITableForm, ITableSend } from "./tableFormType";
 import { User } from "next-auth";
 import { IUser } from "@/types/types";
 import { CreateTable } from "@/actions/GameLogics/createTable/createTable";
@@ -17,38 +17,38 @@ const generateId = () => `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
 const TableFormComponent = () => {
   const session = useSession();
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
   const { defineType, type, fetchData } = useTypeContext();
 
   const defaultValues = {
     title: `${session.data?.user.name}s Table`,
-    private: '',
-    classic: '',
+    private: "",
+    classic: "",
   };
 
   const method = useForm<ITableForm>({
     resolver: yupResolver(schema),
-    defaultValues
+    defaultValues,
   });
 
   const submit = async (e: ITableForm) => {
     if (session.data?.user) {
       const data: ITableSend = {
-        gameStarted : false,
-        playerCount : 0,
+        gameStarted: false,
+        playerCount: 0,
         title: e.title,
         creatorId: session.data?.user.id as string,
-        gameMode: e.classic == 'true' ? 'classic' : "sport",
+        gameMode: e.classic == "true" ? "classic" : "sport",
         players: [],
-        tableType: e.private == 'true' ? "private" : 'public',
+        tableType: e.private == "true" ? "private" : "public",
         waitingPlayers: [],
       };
 
       const res = await CreateTable(data);
 
-      if(res.error) return setError(res.error)
-      defineType(null)
-      fetchData()
+      if (res.error) return setError(res.error);
+      defineType(null);
+      fetchData();
     }
   };
 
@@ -61,21 +61,29 @@ const TableFormComponent = () => {
         X
       </h2>
       <TableProvider submit={method.handleSubmit(submit)} methods={method}>
-        <TextInputElement name={'title'} placeholder={'Enter Title'} />
+        <TextInputElement name={"title"} placeholder={"Enter Title"} />
         <div className="flex w-full h-12 justify-center gap-[2px]">
-          <RadioInputElement label={'Public'} name={'private'} value={false} />
-          <RadioInputElement label={'Private'} name={'private'} value={true} />
+          <RadioInputElement label={"Public"} name={"private"} value={false} />
+          <RadioInputElement label={"Private"} name={"private"} value={true} />
         </div>
         <div className="flex w-full h-12 justify-center gap-[2px]">
-          <RadioInputElement label={'classic'} name={'classic'} value={true} />
-          <RadioInputElement label={'Sport'} name={'classic'} value={false} />
+          <RadioInputElement label={"classic"} name={"classic"} value={true} />
+          <RadioInputElement label={"Sport"} name={"classic"} value={false} />
         </div>
-          {error && <div className="w-full h-11 bg-red-600 text-sm 0 rounded-xl text-white text-center font-bold flex items-center justify-center">{error}</div>
-          }
-        <button className="w-full hover:scale-90 duration-500 rounded-md mt-3 text-white font-bold tracking-widest h-10 bg-green-500 left-0" type="submit">Create</button>
+        {error && (
+          <div className="w-full h-11 bg-red-600 text-sm 0 rounded-xl text-white text-center font-bold flex items-center justify-center">
+            {error}
+          </div>
+        )}
+        <button
+          className="w-full hover:scale-90 duration-500 rounded-md mt-3 text-white font-bold tracking-widest h-10 bg-green-500 left-0"
+          type="submit"
+        >
+          Create
+        </button>
       </TableProvider>
     </div>
   );
 };
 
-export default TableFormComponent
+export default TableFormComponent;

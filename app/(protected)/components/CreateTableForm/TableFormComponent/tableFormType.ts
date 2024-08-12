@@ -1,40 +1,40 @@
 import { IUser } from "@/types/types";
 
 export interface ITableForm {
-    title : string,
-    private : any,
-    classic : any
+  title: string;
+  private: any;
+  classic: any;
 }
 
 export type ITableSend = {
-    title : string
-    creatorId: string ;
-    tableType: string; 
-    gameMode: string;  
-    waitingPlayers: TableRequest[]; 
-    players: IUser[];  
-    gameStarted : boolean,
-    playerCount : number ,
-  };
+  title: string;
+  creatorId: string;
+  tableType: string;
+  gameMode: string;
+  waitingPlayers: TableRequest[];
+  players: IUser[];
+  gameStarted: boolean;
+  playerCount: number;
+};
 
-  export interface ITable {
-    creator : IUser,
-    creatorId : string,
-    gameMode : string,
-    id : string,
-    tableType : string,
-    title : string,
-    playerCount : number,
-    gameStarted : boolean,
-    waitingPlayers : IUser[],
-    players : String[]
-  }
+export interface ITable {
+  creator: IUser;
+  creatorId: string;
+  gameMode: string;
+  id: string;
+  tableType: string;
+  title: string;
+  playerCount: number;
+  gameStarted: boolean;
+  waitingPlayers: IUser[];
+  players: String[];
+}
 
-  export type TableRequest = {
-    id: string;
-    tableId: string;
-    userId: string;
-    status: string; 
-    table: ITableSend;  
-    user: IUser;     
-  };
+export type TableRequest = {
+  id: string;
+  tableId: string;
+  userId: string;
+  status: string;
+  table: ITableSend;
+  user: IUser;
+};

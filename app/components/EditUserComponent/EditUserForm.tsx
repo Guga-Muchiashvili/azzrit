@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import { updateUser } from "@/actions/editUser/editUser";
 import { noUserImage } from "@/app/additional/texts";
 import ImagePickerElement from "@/app/elements/imagePicker/imagePicker";
-import {IEditUserProps } from "./editUser.types"; // Ensure you import the correct types/interfaces
+import { IEditUserProps } from "./editUser.types"; // Ensure you import the correct types/interfaces
 import ButtonInputElement from "@/app/elements/button/buttonInput.Element";
 import TextInputElement from "@/app/elements/textInput/textInput.Element";
 import IEditUser from "@/app/(protected)/editprofile/types";
@@ -20,24 +20,25 @@ const EditUserForm = ({ schema, onLanding, modalToggle }: IEditUserProps) => {
   const { data: session, update: updateSession } = useSession();
   const [file, setFile] = useState<File | undefined>();
   const [imageUrl, setImageUrl] = useState<string | undefined>();
-  const [imageLoading, setimageLoading] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const navigate = useRouter()
-
+  const [imageLoading, setimageLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useRouter();
 
   const {
     handleSubmit,
     control,
     formState: { errors },
     reset,
-    watch
+    watch,
   } = useForm<IEditUser>({
     resolver: yupResolver(schema) as any,
   });
 
   const onSubmit = async (val: IEditUser) => {
-    const ml = await getImage()
-    const filtered = ml.resources?.filter((item : any) =>{ if(item.secure_url == imageUrl) return item})
+    const ml = await getImage();
+    const filtered = ml.resources?.filter((item: any) => {
+      if (item.secure_url == imageUrl) return item;
+    });
 
     const data: IEditUser = {
       email: val.email,
@@ -53,34 +54,36 @@ const EditUserForm = ({ schema, onLanding, modalToggle }: IEditUserProps) => {
       return toast.error("Something went wrong");
     }
 
-    modalToggle &&  modalToggle()
+    modalToggle && modalToggle();
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      setimageLoading(true)
+      setimageLoading(true);
       const formData = new FormData();
       if (e.target.files && e.target.files.length > 0) {
         formData.append("file", e.target.files[0]);
         setFile(e.target.files[0]);
       }
 
-      formData.append('upload_preset', 'uploads')
+      formData.append("upload_preset", "uploads");
 
-      const data = await fetch('https://api.cloudinary.com/v1_1/dqsgmvnye/image/upload', {
-        method : "POST",
-        body : formData
-      }).then((res) => {
-       return res.json()
-      })
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/dqsgmvnye/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((res) => {
+        return res.json();
+      });
 
-      if(data.secure_url){
+      if (data.secure_url) {
         setTimeout(() => {
-          setimageLoading(false)
-        }, 3000)
-        setImageUrl(data.secure_url)
+          setimageLoading(false);
+        }, 3000);
+        setImageUrl(data.secure_url);
       }
-
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -93,14 +96,15 @@ const EditUserForm = ({ schema, onLanding, modalToggle }: IEditUserProps) => {
   };
 
   useEffect(() => {
-    setImageUrl(session?.user.image as string)
+    setImageUrl(session?.user.image as string);
     reset(session?.user);
   }, [reset]);
 
-
   return (
     <form
-      className={`w-full ${onLanding ? 'w-full' : "sm:w-2/3 md:w-2/5 lg:w-1/3"} h-full bg-white px-7 flex flex-col items-center justify-center py-14`}
+      className={`w-full ${
+        onLanding ? "w-full" : "sm:w-2/3 md:w-2/5 lg:w-1/3"
+      } h-full bg-white px-7 flex flex-col items-center justify-center py-14`}
       onSubmit={handleSubmit(onSubmit)}
     >
       <motion.h1
@@ -118,7 +122,7 @@ const EditUserForm = ({ schema, onLanding, modalToggle }: IEditUserProps) => {
         >
           {file ? (
             <Image
-              src={typeof file == 'string' ? file :  URL.createObjectURL(file)}
+              src={typeof file == "string" ? file : URL.createObjectURL(file)}
               width={120}
               height={120}
               alt="pfp"
@@ -127,11 +131,13 @@ const EditUserForm = ({ schema, onLanding, modalToggle }: IEditUserProps) => {
           ) : (
             <Image
               src={
-                session?.user.image == null ? noUserImage :
-                session?.user.image.includes('http') ? 
-                session.user.image : 
-                session?.user.image ?
-                   `/uploads/${session?.user.image}` : ""
+                session?.user.image == null
+                  ? noUserImage
+                  : session?.user.image.includes("http")
+                  ? session.user.image
+                  : session?.user.image
+                  ? `/uploads/${session?.user.image}`
+                  : ""
               }
               width={120}
               height={120}
@@ -174,18 +180,33 @@ const EditUserForm = ({ schema, onLanding, modalToggle }: IEditUserProps) => {
         transition={{ duration: 1.2, ease: "easeIn" }}
         className="mt-3 w-full"
       >
-         <button disabled={imageLoading} className={`w-full h-12 text-blue-500 ${imageLoading ?  ` cursor-wait` : "hover:bg-blue-300 hover:text-white hover:border-none"} duration-200 ease-in rounded-lg font-normal border-[1px] border-blue-500 `}>Save</button>
-         <div className="absolute bottom-5 left-0 px-6 w-full" onClick={async () => {
+        <button
+          disabled={imageLoading}
+          className={`w-full h-12 text-blue-500 ${
+            imageLoading
+              ? ` cursor-wait`
+              : "hover:bg-blue-300 hover:text-white hover:border-none"
+          } duration-200 ease-in rounded-lg font-normal border-[1px] border-blue-500 `}
+        >
+          Save
+        </button>
+        <div
+          className="absolute bottom-5 left-0 px-6 w-full"
+          onClick={async () => {
             if (!imageLoading) {
               await signOutUser();
-              navigate.push('signIn');
+              navigate.push("signIn");
               window.location.reload();
             }
-          }}>
-         <button className={`w-full h-12 text-red-500 hover:bg-red-300 hover:text-white hover:border-none duration-200 ease-in rounded-lg font-normal border-[1px] border-red-500`}>Sign Out</button>
+          }}
+        >
+          <button
+            className={`w-full h-12 text-red-500 hover:bg-red-300 hover:text-white hover:border-none duration-200 ease-in rounded-lg font-normal border-[1px] border-red-500`}
+          >
+            Sign Out
+          </button>
         </div>
       </motion.div>
-      
     </form>
   );
 };

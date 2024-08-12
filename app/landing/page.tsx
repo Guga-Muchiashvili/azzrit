@@ -48,7 +48,9 @@ const Page = () => {
                 isRegistered
                   ? "text-7xl md:text-9xl"
                   : "text-5xl md:8xl xl:text-9xl"
-              } sm:text-7xl font-bold cursor-pointer hover:text-white duration-700  hover:${device == 'mobile' ? 'text-[50px]' : "text-[145px]"}`}
+              } sm:text-7xl font-bold cursor-pointer hover:text-white duration-700  hover:${
+                device == "mobile" ? "text-[50px]" : "text-[145px]"
+              }`}
             >
               <Link href={`/${item[1]}`}>
                 <p>{item[0].toUpperCase()}</p>

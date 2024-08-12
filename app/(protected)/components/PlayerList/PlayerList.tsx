@@ -24,22 +24,19 @@ const PlayerListComponent = () => {
   const { data: sessionData } = useSession();
   const navigate = useRouter();
 
-  const fetchTableData = useCallback(
-    async (id: string) => {
-      try {
-        const fetchedTable = await getTableById(id);
-        
-        if (fetchedTable) {
-          setTable(fetchedTable as any);
-          const fetchedPlayers = await getTableUsers(fetchedTable.id);
-          setPlayers(fetchedPlayers as any);
-        }
-      } catch (error) {
-        console.error("Error fetching table:", error);
+  const fetchTableData = useCallback(async (id: string) => {
+    try {
+      const fetchedTable = await getTableById(id);
+
+      if (fetchedTable) {
+        setTable(fetchedTable as any);
+        const fetchedPlayers = await getTableUsers(fetchedTable.id);
+        setPlayers(fetchedPlayers as any);
       }
-    },
-    []
-  );
+    } catch (error) {
+      console.error("Error fetching table:", error);
+    }
+  }, []);
 
   useEffect(() => {
     if (!tableId) return;
@@ -48,14 +45,13 @@ const PlayerListComponent = () => {
       const user = await getUserById(sessionData?.user.id);
 
       if (user?.acceptedTables.includes(tableId as string) == false) {
-        console.log('kicking')
         return navigate.push("/");
       } else {
         const res = await sendRequest({
           id: sessionData?.user.id,
           itemId: tableId as string,
         });
-        console.log(res)
+        console.log(res);
       }
     };
 

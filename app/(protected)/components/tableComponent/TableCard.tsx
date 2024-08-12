@@ -27,23 +27,23 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
   };
 
   const SendRequest = async () => {
-    if (item.tableType === 'public' || item.creatorId === session?.user?.id) {
+    if (item.tableType === "public" || item.creatorId === session?.user?.id) {
       const res = await appendPlayer(session?.user?.id as string, item.id);
       if (res.tableId === item.id || res.success) {
         return navigate.push(`/table/${item.id}`);
       }
     } else {
       const res = await sendRequest({ id: session?.user?.id, itemId: item.id });
-      if(res.error){
+      if (res.error) {
         toast.error(res.error);
       }
-      if (res.message === 'Already Sent') {
-        toast.error('Already sent');
+      if (res.message === "Already Sent") {
+        toast.error("Already sent");
       }
-      if(res.success == 'Waiting Players Sent'){
-        toast.success('Request sent');
+      if (res.success == "Waiting Players Sent") {
+        toast.success("Request sent");
       }
-      if (res.success === 'Joined') {
+      if (res.success === "Joined") {
         return navigate.push(`/table/${item.id}`);
       }
     }
@@ -123,7 +123,7 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
                 <motion.div
                   initial={{ opacity: 0, translateY: 10 }}
                   animate={{ opacity: 1, translateY: 0 }}
-                  transition={{ duration: 2, delay: 0.5 * i, ease: 'easeIn' }}
+                  transition={{ duration: 2, delay: 0.5 * i, ease: "easeIn" }}
                   key={matchingUser.id}
                 >
                   <Image
@@ -174,12 +174,19 @@ const TableCardElement = ({ item, index }: { item: ITable; index: number }) => {
           >
             {item.gameStarted
               ? "Spectate"
-              : item.creatorId === session?.user?.id || users.some(user => user.id === session?.user?.id && user.acceptedTables.includes(item.id)) || item.tableType == 'public'
+              : item.creatorId === session?.user?.id ||
+                users.some(
+                  (user) =>
+                    user.id === session?.user?.id &&
+                    user.acceptedTables.includes(item.id)
+                ) ||
+                item.tableType == "public"
               ? "join"
-              : JSON.parse(item.waitingPlayers as any).some((player : IUser) => player.id === session?.user?.id)
+              : JSON.parse(item.waitingPlayers as any).some(
+                  (player: IUser) => player.id === session?.user?.id
+                )
               ? "Sent"
               : "Request"}
-
           </motion.button>
         </div>
       </motion.div>
