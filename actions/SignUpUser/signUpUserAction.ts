@@ -38,12 +38,9 @@ export const SignUpUser = async (
     },
   });
 
-  const verificationToken = await generateVerificationToken(data.email)
+  const verificationToken = await generateVerificationToken(data.email);
 
-  await sendVerificationEmail(
-    verificationToken.email,
-    verificationToken.token
-  )
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
   return {
     success: true,

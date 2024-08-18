@@ -1,7 +1,7 @@
-import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
-import { RadioInputElementProps } from './radioInputElementTypes';
-import './styles.scss'; 
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import { RadioInputElementProps } from "./radioInputElementTypes";
+import "./styles.scss";
 
 const RadioInputElement = ({ name, value, label }: RadioInputElementProps) => {
   const { control } = useFormContext();
@@ -11,8 +11,8 @@ const RadioInputElement = ({ name, value, label }: RadioInputElementProps) => {
       control={control}
       name={name}
       render={({ field, fieldState: { error } }) => (
-        <div className='w-1/2 h-full flex relative flex-col'>
-          <div className='flex relative'>
+        <div className="w-1/2 h-full flex relative flex-col">
+          <div className="flex relative">
             <input
               type="radio"
               value={String(value)}
@@ -20,11 +20,13 @@ const RadioInputElement = ({ name, value, label }: RadioInputElementProps) => {
               onChange={field.onChange}
               className="radio-input h-full"
             />
-            <p className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-gray-200 pointer-events-none'>
+            <p className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-gray-200 pointer-events-none">
               {label}
             </p>
           </div>
-          {error && <span className="text-red-500 text-sm mt-1">{error.message}</span>}
+          {error && (
+            <span className="text-red-500 text-sm mt-1">{error.message}</span>
+          )}
         </div>
       )}
     />

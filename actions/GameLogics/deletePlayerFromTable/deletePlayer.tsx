@@ -1,9 +1,8 @@
-'use server'
+"use server";
 import { db } from "@/lib/db";
 import { pusherServer } from "@/lib/pusher";
 
 export const deleteUserTableId = async (id: string, mode?: string) => {
-  
   if (!id) {
     console.error("User ID is undefined");
     return;
@@ -11,7 +10,7 @@ export const deleteUserTableId = async (id: string, mode?: string) => {
 
   try {
     const user = await db.user.findFirst({
-      where: { id }
+      where: { id },
     });
 
     if (!user) {
@@ -27,22 +26,31 @@ export const deleteUserTableId = async (id: string, mode?: string) => {
       },
     });
 
-
     for (const table of tables) {
       const playersArray = JSON.parse(table.players);
-      const acceptedTables = JSON.parse(user.acceptedTables || '[]');
-      console.log(`Original players array for table ${table.id}:`, playersArray);
+      const acceptedTables = JSON.parse(user.acceptedTables || "[]");
+      console.log(
+        `Original players array for table ${table.id}:`,
+        playersArray
+      );
 
       let updatedAcceptedTables = [];
 
       if (acceptedTables) {
-        updatedAcceptedTables = acceptedTables.filter((item: string) => item !== table.id);
+        updatedAcceptedTables = acceptedTables.filter(
+          (item: string) => item !== table.id
+        );
       }
 
-      const updatedPlayersArray = playersArray.filter((playerId: string) => playerId !== id);
-      console.log(`Updated players array for table ${table.id}:`, updatedPlayersArray);
+      const updatedPlayersArray = playersArray.filter(
+        (playerId: string) => playerId !== id
+      );
+      console.log(
+        `Updated players array for table ${table.id}:`,
+        updatedPlayersArray
+      );
 
-     const updatedTable = await db.table.update({
+      const updatedTable = await db.table.update({
         where: {
           id: table.id,
         },
@@ -56,16 +64,20 @@ export const deleteUserTableId = async (id: string, mode?: string) => {
         where: { id },
         data: {
           tableId: null,
-          acceptedTables: mode == 'kick' ? JSON.stringify(updatedAcceptedTables) : user.acceptedTables,
+          acceptedTables:
+            mode == "kick"
+              ? JSON.stringify(updatedAcceptedTables)
+              : user.acceptedTables,
         },
       });
-      
 
-      const tables = await db.table.findMany()
+      const tables = await db.table.findMany();
 
-      pusherServer.trigger('mafia-city', 'tables', tables)
+      pusherServer.trigger("mafia-city", "tables", tables);
 
-      console.log(`Table ${table.id} updated with new players array and playerCount`);
+      console.log(
+        `Table ${table.id} updated with new players array and playerCount`
+      );
       return userUpdate;
     }
   } catch (error) {

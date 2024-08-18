@@ -1,10 +1,9 @@
-'use server'
+"use server";
 import { db } from "@/lib/db";
 import { pusherServer } from "@/lib/pusher";
 
 export const appendPlayer = async (id: string, tableId: string) => {
   try {
-
     const table = await db.table.findUnique({
       where: { id: tableId },
     });
@@ -16,22 +15,20 @@ export const appendPlayer = async (id: string, tableId: string) => {
     const isPlayerAlreadyInThisTable = await db.table.findMany({
       where: {
         players: {
-          contains: id, 
+          contains: id,
         },
       },
     });
 
-
-
     const user = await db.user.findFirst({
-      where : {id}
-    })
+      where: { id },
+    });
 
-
-    if(isPlayerAlreadyInThisTable.length ) return {status : 'Joined', tableId : isPlayerAlreadyInThisTable[0].id}
+    if (isPlayerAlreadyInThisTable.length)
+      return { status: "Joined", tableId: isPlayerAlreadyInThisTable[0].id };
 
     const players = JSON.parse(table.players);
-    players.push(id); 
+    players.push(id);
 
     const updatedPlayers = JSON.stringify(players);
 
@@ -45,25 +42,23 @@ export const appendPlayer = async (id: string, tableId: string) => {
       },
     });
 
-    const acceptedTables = JSON.parse(user?.acceptedTables as any)
-    acceptedTables.push(updatedTable.id)
-    
+    const acceptedTables = JSON.parse(user?.acceptedTables as any);
+    acceptedTables.push(updatedTable.id);
+
     const updateUser = await db.user.update({
-      where : {
-        id
+      where: {
+        id,
       },
-      data : {
-          tableId,
-          acceptedTables : JSON.stringify(acceptedTables)
-      }
-    })
+      data: {
+        tableId,
+        acceptedTables: JSON.stringify(acceptedTables),
+      },
+    });
 
-    const tables = await db.table.findMany()
+    const tables = await db.table.findMany();
 
-    console.log('updated', tables)
-    pusherServer.trigger('mafia-city', 'tables', tables)
-
-
+    console.log("updated", tables);
+    pusherServer.trigger("mafia-city", "tables", tables);
 
     return { success: "Player added successfully", table: updatedTable };
   } catch (error) {

@@ -23,39 +23,45 @@ const CretorControlComponent = ({
 
   const { tableId } = useParams();
 
-  const acceptPlayer = useCallback(async (id: string) => {
-    const res = await confirmRequest({ id, tableId: tableId as string });
-    if (res.success == "User Accepted") {
-      toast.success("User Accepted");
-    }
-    if (res.message == "Already In") {
-      toast.error("User is already on Table");
-    }
-  }, [tableId]);
+  const acceptPlayer = useCallback(
+    async (id: string) => {
+      const res = await confirmRequest({ id, tableId: tableId as string });
+      if (res.success == "User Accepted") {
+        toast.success("User Accepted");
+      }
+      if (res.message == "Already In") {
+        toast.error("User is already on Table");
+      }
+    },
+    [tableId]
+  );
 
-  const rejectPlayer = useCallback(async (id: string) => {
-    const res = await rejectRequest({ id, tableId: tableId as string });
-    if (res.sucess == 'User Rejected') {
-      toast.success("User Rejected");
-    }
-  }, [tableId]);
+  const rejectPlayer = useCallback(
+    async (id: string) => {
+      const res = await rejectRequest({ id, tableId: tableId as string });
+      if (res.sucess == "User Rejected") {
+        toast.success("User Rejected");
+      }
+    },
+    [tableId]
+  );
 
   useEffect(() => {
     const getWaitingPlayers = async () => {
       const players = await waitingPlayerList(tableId as string);
       setPlayers(players);
     };
-    
+
     getWaitingPlayers();
 
     const handlePusherEvent = (data: any) => {
       setPlayers(data);
     };
 
-    pusherClient.bind('requests', handlePusherEvent);
+    pusherClient.bind("requests", handlePusherEvent);
 
     return () => {
-      pusherClient.unbind('requests', handlePusherEvent);
+      pusherClient.unbind("requests", handlePusherEvent);
     };
   }, [tableId]);
 

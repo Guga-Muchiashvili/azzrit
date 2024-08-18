@@ -1,24 +1,21 @@
-'use server'
+"use server";
 import { getTableByCreator } from "@/actions/fetchData/dataRequests";
 import { ITableSend } from "@/app/(protected)/components/CreateTableForm/TableFormComponent/tableFormType";
 import { db } from "@/lib/db";
 import { pusherServer } from "@/lib/pusher";
 
 export const CreateTable = async (data: ITableSend) => {
-
-
   const existingTable = await getTableByCreator(data.creatorId);
 
   const isPlayerAlreadyInThisTable = await db.table.findMany({
     where: {
       players: {
-        contains: data.creatorId, 
+        contains: data.creatorId,
       },
     },
   });
 
-
-  if (existingTable || isPlayerAlreadyInThisTable.length ) {
+  if (existingTable || isPlayerAlreadyInThisTable.length) {
     return { error: "You Are in another Table" };
   }
 
@@ -28,11 +25,11 @@ export const CreateTable = async (data: ITableSend) => {
         title: data.title,
         gameMode: data.gameMode,
         tableType: data.tableType,
-        players: JSON.stringify([]), 
-        waitingPlayers: JSON.stringify([]), 
+        players: JSON.stringify([]),
+        waitingPlayers: JSON.stringify([]),
         creatorId: data.creatorId,
         playerCount: data.playerCount,
-        gameStarted: false, 
+        gameStarted: false,
       },
     });
 
@@ -43,9 +40,9 @@ export const CreateTable = async (data: ITableSend) => {
       },
     });
 
-   const tables = await db.table.findMany()
+    const tables = await db.table.findMany();
 
-    pusherServer.trigger('mafia-city', 'tables', tables)
+    pusherServer.trigger("mafia-city", "tables", tables);
 
     return { success: "Table created successfully" };
   } catch (error) {

@@ -1,5 +1,8 @@
-'use server'
-import { getTableByCreator, getTableById } from "@/actions/fetchData/dataRequests";
+"use server";
+import {
+  getTableByCreator,
+  getTableById,
+} from "@/actions/fetchData/dataRequests";
 import { ITableSend } from "@/app/(protected)/components/CreateTableForm/TableFormComponent/tableFormType";
 import { db } from "@/lib/db";
 import { pusherServer } from "@/lib/pusher";
@@ -13,10 +16,10 @@ export const deleteTable = async (id: string, creatorId: string) => {
   }
 
   try {
-    const players = JSON.parse(existingTable.players || '[]') as string[];
+    const players = JSON.parse(existingTable.players || "[]") as string[];
 
     await Promise.all(
-      players.map(playerId =>
+      players.map((playerId) =>
         db.user.update({
           where: { id: playerId },
           data: { tableId: null },
@@ -26,22 +29,20 @@ export const deleteTable = async (id: string, creatorId: string) => {
 
     await db.table.delete({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
 
     await db.user.update({
       where: { id: creatorId },
       data: {
-        tableId: null
+        tableId: null,
       },
     });
 
-    const tables = await db.table.findMany()
+    const tables = await db.table.findMany();
 
-    pusherServer.trigger('mafia-city', 'tables', tables)
-
-
+    pusherServer.trigger("mafia-city", "tables", tables);
 
     return { success: "Table deleted successfully" };
   } catch (error) {
